@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 
-const API_KEY = "_9WqjrbZfEEjdj6reKY3auDCjiM6RcuN9sGUGgcT";
-
 export const useFetch = (url: string) => {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -12,7 +10,7 @@ export const useFetch = (url: string) => {
       try {
         const response = await fetch(url, {
           headers: {
-            Authorization: `Bearer ${API_KEY}`,
+            Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
             Accept: "application/json",
           },
         });

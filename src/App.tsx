@@ -10,7 +10,7 @@ import { useDocumentTitle } from "./hooks/useDocumentTitle";
 
 const App: React.FC = () => {
   // const { data, loading, error } = useFetch(
-  //   "https://api.predicthq.com/v1/saved-locations/q7r1aSYQ-QjOlmRxJldeNQ/insights/events?category=sports"
+  //   "https://api.predicthq.com/v1/saved-locations/q7r1aSYQ-QjOlmRxJldeNQ/insights/events?category=festivals"
   // );
   // console.log(data, loading, error);
   useDocumentTitle();

@@ -12,8 +12,12 @@ const Header: React.FC = () => {
         </Link>
       </div>
       <div className="nav-bar">
-        <Link to="sign in">Sign In</Link>
-        <Link to="sign out">Sign Out</Link>
+        <div className="button">
+          <Link to="sign in">Sign In</Link>
+        </div>
+        <div className="button reversed-button">
+          <Link to="sign out">Sign Out</Link>
+        </div>
       </div>
     </div>
   );

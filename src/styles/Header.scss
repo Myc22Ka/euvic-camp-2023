@@ -5,11 +5,15 @@
   justify-content: space-between;
   @include font(1rem, $color-dm-font);
   padding: 1rem;
+  position: absolute;
+  width: 100%;
+  box-sizing: border-box;
 
   .app-name {
     font-size: larger;
   }
   .nav-bar {
     @include flex-center;
+    gap: 1rem;
   }
 }
