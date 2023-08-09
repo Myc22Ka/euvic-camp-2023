@@ -2,3 +2,22 @@
 
 // colors
 $some_var: #323641;
+$color-dm-font: white;
+
+// mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@mixin font($size, $color) {
+  font-size: $size;
+  color: $color;
+  font-family: "Montserrat";
+}
+
+// custom font
+@font-face {
+  font-family: "Montserrat";
+  src: url("../assets/font/Montserrat-Regular.ttf");
+}

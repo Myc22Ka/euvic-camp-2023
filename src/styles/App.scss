@@ -1,5 +1,16 @@
 @import "./constants.scss";
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
+:any-link {
+  all: initial;
+  cursor: pointer;
+  user-select: none;
+}
+
 .app {
   background: $some_var;
 }

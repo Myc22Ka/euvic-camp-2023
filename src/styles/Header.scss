@@ -1,0 +1,15 @@
+@import "./constants.scss";
+
+.header {
+  @include flex-center;
+  justify-content: space-between;
+  @include font(1rem, $color-dm-font);
+  padding: 1rem;
+
+  .app-name {
+    font-size: larger;
+  }
+  .nav-bar {
+    @include flex-center;
+  }
+}
