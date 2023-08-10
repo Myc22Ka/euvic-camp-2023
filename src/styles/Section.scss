@@ -1,0 +1,37 @@
+@import "./constants.scss";
+
+.section {
+  .categories {
+    $gap: 0.6rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: $gap;
+    margin: $gap 0;
+    .category {
+      @include flex-center;
+      gap: 0.5rem;
+      flex-direction: column;
+      background: #ddd;
+      padding: 1rem;
+      @include font(1.7rem, black);
+      cursor: pointer;
+      svg {
+        width: 5vw;
+        height: 5vw;
+        fill: white;
+        background: $main;
+        padding: 1rem;
+        border-radius: 50%;
+      }
+      @for $i from 1 through 8 {
+        &:nth-child(#{$i}) svg {
+          background: adjust-hue($main, 5 * $i);
+        }
+      }
+      .category-description {
+        font-size: small;
+      }
+    }
+  }
+}

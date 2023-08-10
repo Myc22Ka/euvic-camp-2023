@@ -1,5 +1,4 @@
 import React from "react";
-import { useFetch } from "./hooks/Fetch";
 import "./styles/App.scss";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
@@ -9,10 +8,6 @@ import Layout from "./layout/Layout";
 import { useDocumentTitle } from "./hooks/useDocumentTitle";
 
 const App: React.FC = () => {
-  // const { data, loading, error } = useFetch(
-  //   "https://api.predicthq.com/v1/saved-locations/q7r1aSYQ-QjOlmRxJldeNQ/insights/events?category=festivals"
-  // );
-  // console.log(data, loading, error);
   useDocumentTitle();
 
   return (

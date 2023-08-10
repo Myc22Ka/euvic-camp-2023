@@ -1,7 +1,9 @@
 // file only for constants and rules
 
 // colors
-$background: #232c33;
+$background: #05062d;
+$main: #4a84f0;
+$second: #cb8de9;
 $color-dm-font: white;
 
 // mixins
@@ -14,6 +16,7 @@ $color-dm-font: white;
   font-size: $size;
   color: $color;
   font-family: "Montserrat";
+  font-weight: bold;
 }
 
 // custom font
