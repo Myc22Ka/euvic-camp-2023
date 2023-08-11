@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { EventfulEvent } from "../types/types";
+import { SavedLocations } from "../types/types";
 
-export const useFetchEvents = (url: string) => {
-  const [data, setData] = useState<EventfulEvent | null>(null);
+export const useSavedLocations = () => {
+  const [savedLocations, setSavedLocations] = useState<SavedLocations[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setLoading(true);
-    const fetchData = async () => {
+    const getSavedLocations = async () => {
       try {
-        const response = await fetch(url, {
+        const response = await fetch("https://api.predicthq.com/v1/saved-locations", {
           headers: {
             Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
             Accept: "application/json",
@@ -18,16 +18,16 @@ export const useFetchEvents = (url: string) => {
         });
 
         const responseData = await response.json();
-        setData(responseData);
+        setSavedLocations(responseData.locations);
       } catch (err) {
-        setError("An error occurred while fetching data.");
+        setError("An error occurred while fetching saved locations.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
-  }, [url]);
+    getSavedLocations();
+  }, []);
 
-  return { data, loading, error };
+  return { loading, error, savedLocations };
 };

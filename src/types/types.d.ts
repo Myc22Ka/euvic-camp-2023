@@ -34,12 +34,59 @@ interface Entity {
 }
 
 interface GeoInfo {
-  geometry: {
-    type: string;
-    coordinates: [number, number]; // [longitude, latitude]
-  };
+  geometry: GeoJsonGeometr;
   placekey: string;
 }
+
+type GeoJsonGeometry = {
+  type: string;
+  coordinates: [number, number];
+};
+
+type GeoJsonFeature = {
+  type: string;
+  geometry: GeoJsonGeometry;
+};
+
+type Place = {
+  place_id: number;
+  type: string;
+  name: string;
+  county: string;
+  region: string;
+  country: string;
+  geojson: GeoJsonFeature;
+};
+
+type DateRange = {
+  type: string;
+  start_dt: string;
+  end_dt: string;
+};
+
+type SummaryInsight = {
+  date_range: DateRange;
+  phq_attendance_sum: number;
+  attended_event_count: number;
+  non_attended_event_count: number;
+  unscheduled_event_count: number;
+};
+
+type SavedLocations = {
+  location_id: string;
+  create_dt: string;
+  update_dt: string;
+  enrich_dt: string;
+  insights_dt: string;
+  user_id: string;
+  name: string;
+  place_ids: number[];
+  formatted_address: string;
+  places: Place[];
+  summary_insights: SummaryInsight[];
+  subscription_valid_types: string[];
+  status: string;
+};
 
 interface ChildrenProps {
   children: React.ReactNode;
@@ -47,5 +94,5 @@ interface ChildrenProps {
 
 interface Route {
   component: React.FC;
-  url: string;
+  url: string | string[];
 }
