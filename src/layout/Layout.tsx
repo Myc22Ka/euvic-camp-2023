@@ -2,7 +2,10 @@ import React from "react";
 import Header from "./Header";
 import "../styles/Layout.scss";
 import Main from "./Main";
-import { ChildrenProps } from "../types/types";
+
+interface ChildrenProps {
+  children: React.ReactNode;
+}
 
 const Layout: React.FC<ChildrenProps> = ({ children }) => {
   return (

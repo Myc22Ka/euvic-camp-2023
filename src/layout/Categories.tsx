@@ -8,9 +8,9 @@ const Categories: React.FC = () => {
   return (
     <div className="categories">
       {CATEGORIES.map((category, key) => (
-        <Link key={key} to={`/${category.name}`}>
+        <Link key={key} to={category.name}>
           <motion.div className="category" {...BUTTON_ANIMATION}>
-            <category.component />
+            <category.icon />
             <div className="category-title">{category.name}</div>
             <div className="category-description">Some text for now</div>
           </motion.div>

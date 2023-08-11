@@ -1,6 +1,9 @@
 import React from "react";
 import "../styles/Section.scss";
-import { ChildrenProps } from "../types/types";
+
+interface ChildrenProps {
+  children: React.ReactNode;
+}
 
 const Section: React.FC<ChildrenProps> = ({ children }) => {
   return <div className="section">{children}</div>;

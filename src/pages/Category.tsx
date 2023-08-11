@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useFetchEvents } from "../hooks/useFetchEvents";
-import { useSavedLocations } from "../hooks/useSavedLocations";
+import { useLocation } from "react-router-dom";
 
 const Category: React.FC = () => {
-  const { savedLocations } = useSavedLocations();
+  const location = useLocation();
+  const category = useRef<string>(decodeURIComponent(location.pathname.substring(1)));
 
-  savedLocations?.map((location) => console.log(location.name));
+  const { data } = useFetchEvents({ category: category.current });
 
-  return <div>Category</div>;
+  console.log(data);
+
+  return <div>{category.current}</div>;
 };
 
 export default Category;

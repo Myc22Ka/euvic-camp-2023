@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { SavedLocations } from "../types/types";
 
 export const useSavedLocations = () => {
   const [savedLocations, setSavedLocations] = useState<SavedLocations[] | null>(null);

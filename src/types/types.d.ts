@@ -1,5 +1,3 @@
-import React from "react";
-
 interface EventfulEvent {
   count: number;
   results: resultsEvent[];
@@ -88,11 +86,7 @@ type SavedLocations = {
   status: string;
 };
 
-interface ChildrenProps {
-  children: React.ReactNode;
-}
-
 interface Route {
   component: React.FC;
-  url: string | string[];
+  url: string;
 }

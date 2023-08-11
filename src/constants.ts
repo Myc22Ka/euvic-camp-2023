@@ -20,13 +20,13 @@ export const BUTTON_ANIMATION: AnimationProps & { whileTap: TargetAndTransition;
   },
 };
 
-export const CATEGORIES: Array<{ name: string; component: IconType }> = [
-  { name: "Sports", component: MdSportsBaseball },
-  { name: "Conferences", component: MdSlideshow },
-  { name: "Expos", component: MdShoppingCart },
-  { name: "Concerts", component: MdOutlineMusicNote },
-  { name: "Festivals", component: MdOutlineFestival },
-  { name: "Performing Arts", component: MdBrush },
-  { name: "Community", component: MdPeople },
-  { name: "Academic", component: MdSchool },
+export const CATEGORIES: Array<{ name: string; icon: IconType }> = [
+  { name: "Sports", icon: MdSportsBaseball },
+  { name: "Conferences", icon: MdSlideshow },
+  { name: "Expos", icon: MdShoppingCart },
+  { name: "Concerts", icon: MdOutlineMusicNote },
+  { name: "Festivals", icon: MdOutlineFestival },
+  { name: "Performing Arts", icon: MdBrush },
+  { name: "Community", icon: MdPeople },
+  { name: "Academic", icon: MdSchool },
 ];

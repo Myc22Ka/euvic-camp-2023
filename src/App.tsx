@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useRef } from "react";
 import "./styles/App.scss";
 import { Route, Routes } from "react-router-dom";
 import { useDocumentTitle } from "./hooks/useDocumentTitle";
 import { routes } from "./routes";
 import PageNotFound from "./pages/PageNotFound";
+import Category from "./pages/Category";
+import { CATEGORIES } from "./constants";
 
 const App: React.FC = () => {
   useDocumentTitle();
@@ -15,12 +17,18 @@ const App: React.FC = () => {
           <Route path="*" element={<PageNotFound />} />
           {routes.map((route, key) => {
             if (key === 0) return <Route key={key} index element={<route.component />} />;
-            if (Array.isArray(route.url))
-              return route.url.map((e, i) => (
-                <Route key={`${key}-${i}`} path={`:${e}`} element={<route.component />} />
-              ));
-            return <Route key={key} path={`:${route.url}`} element={<route.component />} />;
+            return (
+              <Route
+                key={key}
+                index={key === 0}
+                path={key !== 0 ? `:${route.url}` : undefined}
+                element={<route.component />}
+              />
+            );
           })}
+          {CATEGORIES.map((category, key) => (
+            <Route key={key} path={`:${category.name}`} element={<Category />} />
+          ))}
         </Route>
       </Routes>
     </div>
