@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/Header.scss";
+import { motion } from "framer-motion";
+import { BUTTON_ANIMATION } from "../constants";
 
 const Header: React.FC = () => {
   return (
@@ -14,14 +16,14 @@ const Header: React.FC = () => {
       <div className="nav-bar">
         <div className="category">Categories</div>
         <Link to="sign in">
-          <div className="button">
+          <motion.div className="button" {...BUTTON_ANIMATION}>
             <span>Sign In</span>
-          </div>
+          </motion.div>
         </Link>
         <Link to="sign out">
-          <div className="button">
+          <motion.div className="button" {...BUTTON_ANIMATION}>
             <span className="reverse">Sign Out</span>
-          </div>
+          </motion.div>
         </Link>
       </div>
     </div>

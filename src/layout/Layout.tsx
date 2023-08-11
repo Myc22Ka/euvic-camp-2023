@@ -1,14 +1,14 @@
 import React from "react";
 import Header from "./Header";
-import Slider from "../components/Slider";
 import "../styles/Layout.scss";
 import Main from "./Main";
+import { ChildrenProps } from "../types/types";
 
-const Layout: React.FC = () => {
+const Layout: React.FC<ChildrenProps> = ({ children }) => {
   return (
     <div className="layout">
       <Header />
-      <Slider />
+      {children}
       <Main />
     </div>
   );

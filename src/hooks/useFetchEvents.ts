@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { EventfulEvent } from "../types/types";
 
 export const useFetchEvents = (url: string) => {
   const [data, setData] = useState<EventfulEvent | null>(null);

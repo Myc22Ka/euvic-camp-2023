@@ -1,3 +1,5 @@
+import React from "react";
+
 interface EventfulEvent {
   count: number;
   results: resultsEvent[];
@@ -37,4 +39,13 @@ interface GeoInfo {
     coordinates: [number, number]; // [longitude, latitude]
   };
   placekey: string;
+}
+
+interface ChildrenProps {
+  children: React.ReactNode;
+}
+
+interface Route {
+  component: React.FC;
+  url: string;
 }

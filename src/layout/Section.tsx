@@ -1,11 +1,8 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import "../styles/Section.scss";
+import { ChildrenProps } from "../types/types";
 
-type SectionProps = {
-  children: ReactNode;
-};
-
-const Section: React.FC<SectionProps> = ({ children }) => {
+const Section: React.FC<ChildrenProps> = ({ children }) => {
   return <div className="section">{children}</div>;
 };
 

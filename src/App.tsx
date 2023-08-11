@@ -1,11 +1,9 @@
 import React from "react";
 import "./styles/App.scss";
 import { Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import SignIn from "./auth/SignIn";
-import SignOut from "./auth/SignOut";
-import Layout from "./layout/Layout";
 import { useDocumentTitle } from "./hooks/useDocumentTitle";
+import { routes } from "./routes";
+import PageNotFound from "./pages/PageNotFound";
 
 const App: React.FC = () => {
   useDocumentTitle();
@@ -13,10 +11,16 @@ const App: React.FC = () => {
   return (
     <div className="app">
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path=":sign in" element={<SignIn />} />
-          <Route path=":sign out" element={<SignOut />} />
+        <Route path="/">
+          <Route path="*" element={<PageNotFound />} />
+          {routes.map((route, key) => (
+            <Route
+              key={key}
+              index={key === 0}
+              path={key !== 0 ? `:${route.url}` : undefined}
+              element={<route.component />}
+            />
+          ))}
         </Route>
       </Routes>
     </div>
