@@ -6,13 +6,20 @@ type FetchRequest = {
 };
 
 export const useFetchEvents = ({ category }: FetchRequest) => {
-  const { savedLocations } = useSavedLocations();
-  const [data, setData] = useState<EventfulEvent[]>([]);
+  const { savedLocations, error } = useSavedLocations();
+  const [events, setEvents] = useState<EventfulEvent[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [err, setErr] = useState<string | null>(null);
 
   useEffect(() => {
+    const tempEventsArray: EventfulEvent[] = [];
     setLoading(true);
+
+    if (error) {
+      setErr("An error occurred while fetching saved locations.");
+      return;
+    }
+
     const fetchLocation = async (location: string) => {
       try {
         const response = await fetch(
@@ -25,30 +32,27 @@ export const useFetchEvents = ({ category }: FetchRequest) => {
           }
         );
 
-        const responseData: EventfulEvent = await response.json();
-        setData((prev) => {
-          const existingEventIds = prev.map((event) => event.results[0].id);
-          const exist = responseData.results.find((event) => existingEventIds.includes(event.id));
-
-          if (exist) return [...prev];
-
-          return [...prev, responseData];
+        await response.json().then((data) => {
+          tempEventsArray.push(data);
         });
+
+        setEvents(events);
       } catch (err) {
-        setError("An error occurred while fetching data.");
+        setErr("An error occurred while fetching data.");
       } finally {
         setLoading(false);
       }
     };
 
-    if (savedLocations) {
-      const locationIds = savedLocations.map((location) => location.location_id);
+    if (!savedLocations) return;
 
-      locationIds.map((location) => {
-        fetchLocation(location);
-      });
-    }
+    const locationIds = savedLocations.map((location) => location.location_id);
+
+    locationIds.map((location) => {
+      fetchLocation(location);
+    });
+    setEvents(tempEventsArray);
   }, [savedLocations]);
 
-  return { data, error, loading };
+  return { events, err, loading };
 };
