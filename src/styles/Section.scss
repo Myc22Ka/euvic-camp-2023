@@ -2,15 +2,14 @@
 
 .section {
   .categories {
-    $gap: 0.6rem;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    gap: $gap;
-    margin: $gap 0;
+    gap: $GAP;
+    margin: $GAP 0;
     .category {
       @include flex-center;
-      gap: 0.5rem;
+      gap: $GAP;
       flex-direction: column;
       background: transparentize($main, 0.7);
       transition: background-color 0.3s ease-in-out;

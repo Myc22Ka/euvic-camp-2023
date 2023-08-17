@@ -27,13 +27,43 @@ const Category: React.FC = () => {
           return (
             <Link to={event.id} key={event.id}>
               <div className="category-card">
-                <div className="main">
-                  <div className="title">
-                    {event.title}
-                    <span className="event-state"> {event.state}</span>
+                <div className="main-card-content">
+                  <div className="card-content">
+                    <div className="card-content-title">
+                      <span className="card-title">{event.title}</span>
+                      {event.state === "active" ? null : <span className="event-state">{`${event.state} event`}</span>}
+                    </div>
+                    <div className="formatted-addres">{findAddress(event, location)}</div>
+                    <div className="time">{formatDateTimeRange(event.start, event.end, event.duration)}</div>
                   </div>
-                  <div className="formatted-addres">{findAddress(event, location)}</div>
-                  <div className="time">{formatDateTimeRange(event.start, event.end, event.duration)}</div>
+                  <div className="card-content">
+                    <div className="card-stats">
+                      <div className="predicted-event-spend">
+                        <span className="predicted-event-spend-number">
+                          ${event.predicted_event_spend.toLocaleString()}
+                        </span>
+                        <span>Predicted Event Spend (USD)</span>
+                      </div>
+                      <div className="predicted-event-spend">
+                        <span className="predicted-event-spend-number black">
+                          {event.phq_attendance.toLocaleString()}
+                        </span>
+                        <span>PHQ Attendance</span>
+                      </div>
+                      <div className="card-stats-whells">
+                        <div className="card-whell">
+                          <span className="card-whell-number">{event.rank}</span>
+                          <span>PHQ</span>
+                        </div>
+                        <div className="card-whell">
+                          <span className="card-whell-number">{event.local_rank}</span>
+                          <span>Local</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="main-card-content">
                   <div className="tags">
                     <div className="icon"></div>
                     <div className="labels">
@@ -44,17 +74,7 @@ const Category: React.FC = () => {
                       ))}
                     </div>
                   </div>
-                </div>
-                <div className="aside">
-                  <div className="card-stats">
-                    <div className="predicted-event-spend">{event.predicted_event_spend}</div>
-                    <div className="phq-attendence">{event.phq_attendance}</div>
-                  </div>
-                  <div className="card-stats-whells">
-                    <div className="card-whell">{event.rank}</div>
-                    <div className="card-whell">{event.local_rank}</div>
-                  </div>
-                  <div className="card-button">more details</div>
+                  <div className="card-button">&#43; more details</div>
                 </div>
               </div>
             </Link>

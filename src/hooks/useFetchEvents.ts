@@ -6,7 +6,7 @@ type FetchRequest = {
 };
 
 export const useFetchEvents = ({ category }: FetchRequest) => {
-  const { savedLocations, error } = useSavedLocations();
+  const { savedLocations } = useSavedLocations();
   const [events, setEvents] = useState<EventfulEvent[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [err, setErr] = useState<string | null>(null);
@@ -14,11 +14,6 @@ export const useFetchEvents = ({ category }: FetchRequest) => {
   useEffect(() => {
     const tempEventsArray: EventfulEvent[] = [];
     setLoading(true);
-
-    if (error) {
-      setErr("An error occurred while fetching saved locations.");
-      return;
-    }
 
     const fetchLocation = async (location: string) => {
       try {
@@ -44,10 +39,9 @@ export const useFetchEvents = ({ category }: FetchRequest) => {
       }
     };
 
-    if (!savedLocations) return;
+    if (!savedLocations) return setErr("An error occurred while fetching saved locations.");
 
     const locationIds = savedLocations.map((location) => location.location_id);
-
     locationIds.map((location) => {
       fetchLocation(location);
     });

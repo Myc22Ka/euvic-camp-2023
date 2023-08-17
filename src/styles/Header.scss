@@ -15,7 +15,7 @@
   }
   .nav-bar {
     @include flex-center;
-    gap: 1rem;
+    gap: $GAP;
     .button {
       background-color: $main;
       background-image: linear-gradient(146deg, $main 16%, $second 100%);

@@ -1,3 +1,94 @@
+@import "./constants.scss";
+
 .category-card {
-  background-color: red;
+  background-color: white;
+  margin: $GAP 0;
+  gap: $GAP * 5;
+  @include flex-center;
+  padding: 24px 40px;
+  flex-direction: column;
+  &:hover {
+    box-shadow: -20px 24px 64px rgba(0, 0, 0, 0.15);
+    .card-title {
+      color: $main;
+    }
+  }
+  .main-card-content {
+    @include flex-center;
+    @include font(24px, $color-lm-font);
+    justify-content: space-between;
+    width: 100%;
+    .card-button {
+      font-size: x-small;
+      color: $main;
+      text-transform: uppercase;
+    }
+    .card-content {
+      .card-stats {
+        @include flex-center;
+        gap: $GAP * 3;
+        .predicted-event-spend {
+          @include flex-center;
+          align-items: flex-start;
+          flex-direction: column;
+          font-size: xx-small;
+          color: transparentize($color-lm-font, 0.2);
+          .predicted-event-spend-number {
+            color: #ff2364;
+            font-size: medium;
+            &.black {
+              color: inherit;
+            }
+          }
+        }
+        .card-stats-whells {
+          @include flex-center;
+          @include font(x-small, $color-lm-font);
+          .card-whell {
+            @include flex-center;
+            flex-direction: column;
+            .card-whell-number {
+              font-size: medium;
+            }
+          }
+        }
+      }
+      .card-content-title {
+        @include flex-center;
+        justify-content: flex-start;
+        margin: 0.8rem 0;
+        .card-title {
+          transition: color 0.1s ease-in-out;
+        }
+        .event-state {
+          font-size: small;
+          background-color: transparentize($main, 0.5);
+          border-radius: 0.4rem;
+          padding: 0.4rem 0.8rem;
+          margin-left: $GAP;
+          color: darken($main, 25);
+        }
+      }
+      .formatted-addres {
+        font-size: medium;
+        color: lighten($color-lm-font, 15);
+      }
+      .time {
+        font-size: small;
+        color: transparentize($color-lm-font, 0.3);
+      }
+    }
+    .tags,
+    .labels {
+      @include flex-center;
+      gap: $GAP;
+      .label {
+        background: transparentize($color-lm-font, 0.9);
+        text-transform: uppercase;
+        padding: 0.4rem 0.8rem;
+        font-size: x-small;
+        border-radius: 20px;
+      }
+    }
+  }
 }
