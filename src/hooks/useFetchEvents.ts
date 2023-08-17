@@ -33,7 +33,7 @@ export const useFetchEvents = ({ category }: FetchRequest) => {
         );
 
         await response.json().then((data) => {
-          tempEventsArray.push(data);
+          tempEventsArray.push({ ...data, location_id: location });
         });
 
         setEvents(events);
@@ -54,5 +54,5 @@ export const useFetchEvents = ({ category }: FetchRequest) => {
     setEvents(tempEventsArray);
   }, [savedLocations]);
 
-  return { events, err, loading };
+  return { events, err, loading, savedLocations };
 };

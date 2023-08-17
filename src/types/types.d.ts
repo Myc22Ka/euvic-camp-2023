@@ -1,6 +1,7 @@
 interface EventfulEvent {
   count: number;
   results: resultsEvent[];
+  location_id: string;
 }
 
 interface resultsEvent {

@@ -12,10 +12,14 @@
       @include flex-center;
       gap: 0.5rem;
       flex-direction: column;
-      background: #ddd;
+      background: transparentize($main, 0.7);
+      transition: background-color 0.3s ease-in-out;
       padding: 1rem;
       @include font(1.7rem, black);
       cursor: pointer;
+      &:hover {
+        background: transparentize($main, 0.3);
+      }
       svg {
         width: 5vw;
         height: 5vw;
@@ -24,13 +28,13 @@
         padding: 1rem;
         border-radius: 50%;
       }
-      @for $i from 1 through 8 {
-        &:nth-child(#{$i}) svg {
-          background: adjust-hue($main, 5 * $i);
-        }
-      }
       .category-description {
         font-size: small;
+      }
+    }
+    @for $i from 1 through 8 {
+      & > a:nth-child(#{$i}) svg {
+        background: adjust-hue($main, 5 * $i);
       }
     }
   }
