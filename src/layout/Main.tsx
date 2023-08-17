@@ -2,12 +2,14 @@ import React from "react";
 import Section from "./Section";
 import Categories from "./Categories";
 
-const Main: React.FC = () => {
+interface ChildrenProps {
+  children: React.ReactNode;
+}
+
+const Main: React.FC<ChildrenProps> = ({ children }: ChildrenProps) => {
   return (
     <div className="main">
-      <Section>
-        <Categories />
-      </Section>
+      <Section>{children}</Section>
     </div>
   );
 };

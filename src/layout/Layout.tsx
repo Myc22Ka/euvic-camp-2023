@@ -9,11 +9,10 @@ interface ChildrenProps {
 
 const Layout: React.FC<ChildrenProps> = ({ children }) => {
   return (
-    <div className="layout">
+    <React.Fragment>
       <Header />
-      {children}
-      <Main />
-    </div>
+      <div className="layout">{children}</div>
+    </React.Fragment>
   );
 };
 

@@ -2,10 +2,11 @@
 
 .header {
   @include flex-center;
+  background: transparentize($background, 0.55);
+  height: $NAVBAR_HEIGHT;
   justify-content: space-between;
   @include font(1rem, $color-dm-font);
   padding: 1rem;
-  position: absolute;
   width: 100%;
   box-sizing: border-box;
 

@@ -1,8 +1,10 @@
 import React, { useRef } from "react";
 import { useFetchEvents } from "../hooks/useFetchEvents";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Loader from "../components/Loader";
 import { formatDateTimeRange } from "../utils/dateFormat";
+import "../styles/Category.scss";
+import Layout from "../layout/Layout";
 
 const Category: React.FC = () => {
   const location = useLocation();
@@ -17,50 +19,49 @@ const Category: React.FC = () => {
     );
   };
 
-  console.log(events);
-
   return (
-    <div>
+    <Layout>
       {loading ? <Loader /> : null}
       {events.map((location) =>
         location.results.map((event) => {
-          // console.log(event.title, event.entities);
           return (
-            <div key={event.id} className="category-card">
-              <div className="main">
-                <div className="title">
-                  {event.title}
-                  <span className="event-state"> {event.state}</span>
-                </div>
-                <div className="formatted-addres">{findAddress(event, location)}</div>
-                <div className="time">{formatDateTimeRange(event.start, event.end, event.duration)}</div>
-                <div className="tags">
-                  <div className="icon"></div>
-                  <div className="labels">
-                    {event.labels.map((label, key) => (
-                      <div key={key} className="label">
-                        {label}
-                      </div>
-                    ))}
+            <Link to={event.id} key={event.id}>
+              <div className="category-card">
+                <div className="main">
+                  <div className="title">
+                    {event.title}
+                    <span className="event-state"> {event.state}</span>
+                  </div>
+                  <div className="formatted-addres">{findAddress(event, location)}</div>
+                  <div className="time">{formatDateTimeRange(event.start, event.end, event.duration)}</div>
+                  <div className="tags">
+                    <div className="icon"></div>
+                    <div className="labels">
+                      {event.labels.map((label, key) => (
+                        <div key={key} className="label">
+                          {label}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="aside">
-                <div className="card-stats">
-                  <div className="predicted-event-spend">{event.predicted_event_spend}</div>
-                  <div className="phq-attendence">{event.phq_attendance}</div>
+                <div className="aside">
+                  <div className="card-stats">
+                    <div className="predicted-event-spend">{event.predicted_event_spend}</div>
+                    <div className="phq-attendence">{event.phq_attendance}</div>
+                  </div>
+                  <div className="card-stats-whells">
+                    <div className="card-whell">{event.rank}</div>
+                    <div className="card-whell">{event.local_rank}</div>
+                  </div>
+                  <div className="card-button">more details</div>
                 </div>
-                <div className="card-stats-whells">
-                  <div className="card-whell">{event.rank}</div>
-                  <div className="card-whell">{event.local_rank}</div>
-                </div>
-                <div className="card-button">more details</div>
               </div>
-            </div>
+            </Link>
           );
         })
       )}
-    </div>
+    </Layout>
   );
 };
 
