@@ -3,5 +3,10 @@
 @import "./constants.scss";
 
 :export {
-  some_var: $some_var;
+  background: $background;
+  main: $main;
+  second: $second;
+  color-lm-font: $color-lm-font;
+  color-dm-font: $color-dm-font;
+  error: $error;
 }

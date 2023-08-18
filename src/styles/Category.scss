@@ -22,6 +22,11 @@
       font-size: x-small;
       color: $main;
       text-transform: uppercase;
+      padding: 1.5rem;
+      transition: color 0.1s ease-in-out;
+      &:hover {
+        color: darken($main, 30);
+      }
     }
     .card-content {
       .card-stats {
@@ -44,9 +49,30 @@
         .card-stats-whells {
           @include flex-center;
           @include font(x-small, $color-lm-font);
+          gap: $GAP;
           .card-whell {
+            $size: 3rem;
             @include flex-center;
             flex-direction: column;
+            background: $error;
+            border-radius: 50%;
+            width: $size;
+            height: $size;
+            position: relative;
+            &::before {
+              content: "";
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              width: 90%;
+              height: 90%;
+              background: white;
+              border-radius: 50%;
+            }
+            span {
+              z-index: 2;
+            }
             .card-whell-number {
               font-size: medium;
             }
