@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../styles/styles.module.scss";
 import CardButton from "../components/CardButton";
-import { formatDateTimeRange } from "../utils/dateFormat";
+import { formatDate, formatDateTimeRange } from "../utils/dateFormat";
 
 type CardProps = {
   event: resultsEvent;
@@ -26,7 +26,7 @@ const Card: React.FC<CardProps> = ({ event, savedLocations, location }) => {
 
   return (
     <Link to={event.id}>
-      <div className="category-card">
+      <div className="category-card" style={{ borderColor: active ? styles.main : "transparent" }}>
         <div className="main-card-content">
           <div className="card-content">
             <div className="card-content-title">
@@ -87,6 +87,64 @@ const Card: React.FC<CardProps> = ({ event, savedLocations, location }) => {
           </div>
           <CardButton active={active} toggleActive={toggleActive} />
         </div>
+        {active ? (
+          <React.Fragment>
+            <div className="devider"></div>
+            <div className="main-card-content">
+              <div className="card-content details">
+                <div>
+                  <div className="details-title">Time & Date</div>
+                  <div className="tags">
+                    <div>
+                      <div className="time">{formatDate(event.start, "short")}</div>
+                      <div className="date">{formatDate(event.start, "time")}</div>
+                    </div>
+                    <div>&#x2022;</div>
+                    <div>
+                      <div className="time">{formatDate(event.end, "short")}</div>
+                      <div className="date">{formatDate(event.end, "time")}</div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div className="details-title">Venue</div>
+                  <div className="tags">
+                    <div>
+                      <div className="time">{findAddress(event, location).split(",")[0]}</div>
+                      <div className="date">{findAddress(event, location).split(",")[1]}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="main-card-content">
+              <div className="card-content details">
+                <div>
+                  <div className="details-title">TimeZone</div>
+                  <div className="tags">
+                    <div>
+                      <div className="time">{event.timezone}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {event.description ? (
+              <div className="main-card-content">
+                <div className="card-content details">
+                  <div>
+                    <div className="details-title">Description</div>
+                    <div className="tags">
+                      <div>
+                        <div className="time">{event.description}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : null}
+          </React.Fragment>
+        ) : null}
       </div>
     </Link>
   );

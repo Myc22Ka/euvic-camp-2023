@@ -2,8 +2,10 @@
 
 .category-card {
   background-color: white;
+  border: 3px solid transparent;
+  // transition: 0.1s border-color ease-in-out;
   margin: $GAP 0;
-  gap: $GAP * 5;
+  gap: $GAP * 3;
   @include flex-center;
   padding: 24px 40px;
   flex-direction: column;
@@ -13,11 +15,23 @@
       color: $main;
     }
   }
+  .devider {
+    height: 1px;
+    width: 100%;
+    background: transparentize($background, 0.85);
+  }
   .main-card-content {
     @include flex-center;
     @include font(24px, $color-lm-font);
     justify-content: space-between;
     width: 100%;
+    .details-title {
+      color: $error;
+      font-size: x-small;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding: 0.7rem 0;
+    }
     .card-button {
       font-size: x-small;
       color: $main;
@@ -29,6 +43,11 @@
       }
     }
     .card-content {
+      &.details {
+        width: 100%;
+        @include flex-center;
+        justify-content: space-between;
+      }
       .card-stats {
         @include flex-center;
         gap: $GAP * 3;
@@ -99,9 +118,13 @@
         font-size: medium;
         color: lighten($color-lm-font, 15);
       }
-      .time {
+      .time,
+      .date {
         font-size: small;
         color: transparentize($color-lm-font, 0.3);
+      }
+      .date {
+        color: transparentize($color-lm-font, 0.6);
       }
     }
     .tags,
