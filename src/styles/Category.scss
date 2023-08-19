@@ -23,8 +23,15 @@
   .main-card-content {
     @include flex-center;
     @include font(24px, $color-lm-font);
-    justify-content: space-between;
+    &.vertical {
+      flex-direction: column;
+    }
     width: 100%;
+    .card-flex {
+      @include flex-center;
+      width: 100%;
+      justify-content: space-between;
+    }
     .details-title {
       color: $error;
       font-size: x-small;

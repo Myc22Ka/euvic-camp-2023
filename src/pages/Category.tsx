@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import Loader from "../components/Loader";
 import "../styles/Category.scss";
 import Layout from "../layout/Layout";
-import Card from "../components/Card";
+import Card from "../components/Card/Card";
 
 const Category: React.FC = () => {
   const location = useLocation();
