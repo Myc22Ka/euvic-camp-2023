@@ -3,18 +3,68 @@
 .layout {
   .slider-container {
     height: 100vh;
+    z-index: -1;
     width: 100%;
+    & > div,
+    .carousel-inner,
+    .carousel-inner > div {
+      height: 100%;
+    }
     .slider-img {
       width: 100%;
       height: 100%;
-      background-image: url("../assets/img/default-img.jpg");
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
+
+      @for $i from 0 to 4 {
+        &.img#{$i} {
+          background-image: url("../assets/img/slider#{$i}.webP");
+        }
+      }
     }
   }
   .main {
     width: 90%;
     margin: auto;
+  }
+}
+
+.header {
+  @include flex-center;
+  z-index: 9999;
+  background: transparent;
+  height: $NAVBAR_HEIGHT;
+  justify-content: space-between;
+  @include font(1rem, $color-dm-font);
+  padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+
+  .app-name {
+    font-size: larger;
+  }
+  &.home {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: transparentize($background, 0.55);
+  }
+  .nav-bar {
+    @include flex-center;
+    gap: $GAP;
+    .button {
+      background-color: $main;
+      border-radius: 0.3rem;
+      @include font(1rem, $color-dm-font);
+      @include flex-center;
+      box-sizing: border-box;
+      padding: 0.7rem 1rem;
+      margin: 4px;
+      transition: background-color 0.1s ease-in-out;
+      &:hover {
+        background-color: lighten($main, 5);
+      }
+    }
   }
 }

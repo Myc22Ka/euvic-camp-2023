@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import "./styles/App.scss";
 import { Route, Routes } from "react-router-dom";
 import { useDocumentTitle } from "./hooks/useDocumentTitle";
@@ -6,6 +6,7 @@ import { routes } from "./routes";
 import PageNotFound from "./pages/PageNotFound";
 import Category from "./pages/Category";
 import { CATEGORIES } from "./constants";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const App: React.FC = () => {
   useDocumentTitle();

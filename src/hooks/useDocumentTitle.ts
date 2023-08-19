@@ -18,6 +18,6 @@ export const useDocumentTitle = () => {
         .join(" ");
     };
 
-    document.title = `${process.env.REACT_APP_NAME} | ${setTitle()}`;
+    document.title = setTitle();
   }, [location]);
 };
