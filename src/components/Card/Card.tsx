@@ -17,13 +17,7 @@ const Card: React.FC<CardProps> = ({ event, savedLocations, location }) => {
 
   return (
     <Link to={event.id}>
-      <EventCard
-        event={event}
-        location={location}
-        active={active}
-        toggleActive={toggleActive}
-        savedLocations={savedLocations}
-      />
+      <EventCard event={event} location={location} active={active} savedLocations={savedLocations} />
     </Link>
   );
 };

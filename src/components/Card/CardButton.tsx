@@ -1,19 +1,18 @@
 import React from "react";
+import { useAccordionButton } from "react-bootstrap";
 
 interface CardButtonProps {
-  active: boolean;
-  toggleActive: () => void;
+  eventKey: string;
 }
 
-const CardButton: React.FC<CardButtonProps> = ({ active, toggleActive }) => {
-  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+const CardButton: React.FC<CardButtonProps> = ({ eventKey }) => {
+  const handleClick = useAccordionButton(eventKey, (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
-    toggleActive();
-  };
+  });
 
   return (
-    <div className={`card-button ${active ? "active" : ""}`} onClick={handleClick}>
-      {active ? "- hide" : "+ more"} details
+    <div className={`card-button`} onClick={handleClick}>
+      more details
     </div>
   );
 };

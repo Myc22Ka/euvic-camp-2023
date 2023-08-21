@@ -1,14 +1,17 @@
 import React, { useState, useContext, createContext, ReactElement, useCallback } from "react";
+import styles from "../styles/styles.module.scss";
 
 type ThemeType = "light" | "dark";
 
-export const initState: ThemeType = "light";
+export const initState: ThemeType = "dark";
 
 const useThemeContext = (defaultTheme: ThemeType) => {
   const [theme, setTheme] = useState(defaultTheme);
 
   const changeTheme = useCallback(() => {
     setTheme(theme === "light" ? "dark" : "light");
+
+    document.documentElement.style.backgroundColor = theme === "light" ? styles.darkmode : styles.lightmode;
   }, [theme]);
 
   return { theme, changeTheme };

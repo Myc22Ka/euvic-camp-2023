@@ -8,10 +8,9 @@ a:last-child .category-card {
 }
 
 .category-card {
-  background-color: $darkmode;
+  background-color: lighten($darkmode, 3);
   border: 3px solid transparent;
   margin: $GAP 0;
-  gap: $GAP * 3;
   @include flex-center;
   padding: 24px 40px;
   flex-direction: column;
@@ -21,7 +20,11 @@ a:last-child .category-card {
       color: $main;
     }
   }
+  .accordion-collapse {
+    width: 100%;
+  }
   .devider {
+    margin-top: $GAP;
     height: 1px;
     width: 100%;
     background: transparentize($lightmode, 0.85);

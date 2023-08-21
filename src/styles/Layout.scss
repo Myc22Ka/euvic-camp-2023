@@ -2,6 +2,7 @@
 
 .layout {
   background: $darkmode;
+  padding-bottom: $GAP;
   &.light-mode {
     background: $lightmode;
   }
@@ -43,7 +44,6 @@
   padding: 1rem;
   width: 100%;
   box-sizing: border-box;
-
   .app-name {
     font-size: larger;
   }

@@ -1,8 +1,10 @@
 @import "./constants.scss";
 
-body {
+body,
+html {
   margin: 0;
   padding: 0;
+  background: $darkmode;
 }
 
 :any-link {
@@ -24,4 +26,28 @@ body {
 .text-flat {
   border-color: $main !important;
   border-right-color: transparent !important;
+}
+.btn-dark,
+.btn-light {
+  color: $lightmode !important;
+  font-family: "Montserrat" !important;
+  font-weight: bold !important;
+  font-size: small !important;
+}
+.btn-light {
+  color: $darkmode !important;
+}
+
+.badge {
+  &.bg-flat {
+    @include font(0.7rem, white);
+    background-color: transparentize($error, 0.5);
+  }
+}
+.badge-text {
+  @include font(0.7rem, $error);
+}
+
+.dropdown-item {
+  width: unset !important;
 }

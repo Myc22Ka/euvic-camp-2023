@@ -1,6 +1,7 @@
 @import "./constants.scss";
 
 .section {
+  padding: $GAP 0;
   .categories {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

@@ -7,12 +7,20 @@ import CardButton from "./CardButton";
 type CardContentProps = {
   event: resultsEvent;
   location: EventfulEvent;
-  active: boolean;
-  toggleActive: () => void;
+  // active: boolean;
+  // toggleActive: () => void;
   findAddress: (event: resultsEvent, location: EventfulEvent) => string;
+  eventKey: string;
 };
 
-export const CardContent: React.FC<CardContentProps> = ({ event, location, active, toggleActive, findAddress }) => {
+export const CardContent: React.FC<CardContentProps> = ({
+  event,
+  location,
+  // active,
+  // toggleActive,
+  findAddress,
+  eventKey,
+}) => {
   return (
     <div className="main-card-content vertical">
       <div className="card-flex">
@@ -34,7 +42,7 @@ export const CardContent: React.FC<CardContentProps> = ({ event, location, activ
             ))}
           </div>
         </div>
-        <CardButton active={active} toggleActive={toggleActive} />
+        <CardButton eventKey={eventKey} />
       </div>
     </div>
   );

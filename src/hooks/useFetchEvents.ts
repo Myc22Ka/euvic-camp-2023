@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSavedLocations } from "./useSavedLocations";
 
 type FetchRequest = {
@@ -11,6 +11,13 @@ export const useFetchEvents = ({ category }: FetchRequest) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [err, setErr] = useState<string | null>(null);
 
+  const changeEventsDisplay = useCallback(
+    (newEventsDisplay: EventfulEvent[]) => {
+      setEvents(newEventsDisplay);
+    },
+    [events]
+  );
+
   useEffect(() => {
     const tempEventsArray: EventfulEvent[] = [];
     setLoading(true);
@@ -18,7 +25,7 @@ export const useFetchEvents = ({ category }: FetchRequest) => {
     const fetchLocation = async (location: string) => {
       try {
         const response = await fetch(
-          `https://api.predicthq.com/v1/saved-locations/${location}/insights/events?category=${category?.toLocaleLowerCase()}`,
+          `https://api.predicthq.com/v1/saved-locations/${location}/insights/events?limit=25&category=${category?.toLocaleLowerCase()}`,
           {
             headers: {
               Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
@@ -48,5 +55,5 @@ export const useFetchEvents = ({ category }: FetchRequest) => {
     setEvents(tempEventsArray);
   }, [savedLocations]);
 
-  return { events, err, loading, savedLocations };
+  return { events, err, loading, savedLocations, changeEventsDisplay };
 };
