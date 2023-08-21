@@ -13,29 +13,27 @@ const App: React.FC = () => {
   useDocumentTitle();
 
   return (
-    <div className="app">
-      <ThemeProvider theme={initState.theme}>
-        <Routes>
-          <Route path="/">
-            <Route path="*" element={<PageNotFound />} />
-            {routes.map((route, key) => {
-              if (key === 0) return <Route key={key} index element={<route.component />} />;
-              return (
-                <Route
-                  key={key}
-                  index={key === 0}
-                  path={key !== 0 ? `:${route.url}` : undefined}
-                  element={<route.component />}
-                />
-              );
-            })}
-            {CATEGORIES.map((category, key) => (
-              <Route key={key} path={`:${category.name}`} element={<Category />} />
-            ))}
-          </Route>
-        </Routes>
-      </ThemeProvider>
-    </div>
+    <ThemeProvider theme={initState}>
+      <Routes>
+        <Route path="/">
+          <Route path="*" element={<PageNotFound />} />
+          {routes.map((route, key) => {
+            if (key === 0) return <Route key={key} index element={<route.component />} />;
+            return (
+              <Route
+                key={key}
+                index={key === 0}
+                path={key !== 0 ? `:${route.url}` : undefined}
+                element={<route.component />}
+              />
+            );
+          })}
+          {CATEGORIES.map((category, key) => (
+            <Route key={key} path={`:${category.name}`} element={<Category />} />
+          ))}
+        </Route>
+      </Routes>
+    </ThemeProvider>
   );
 };
 export default App;

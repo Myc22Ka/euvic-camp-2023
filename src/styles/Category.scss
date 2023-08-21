@@ -1,16 +1,22 @@
 @import "./constants.scss";
 
+a:first-child .category-card {
+  margin-top: 0;
+}
+a:last-child .category-card {
+  margin-bottom: 0;
+}
+
 .category-card {
-  background-color: white;
+  background-color: $darkmode;
   border: 3px solid transparent;
-  // transition: 0.1s border-color ease-in-out;
   margin: $GAP 0;
   gap: $GAP * 3;
   @include flex-center;
   padding: 24px 40px;
   flex-direction: column;
   &:hover {
-    box-shadow: -20px 24px 64px rgba(0, 0, 0, 0.15);
+    box-shadow: -20px 24px 64px transparentize($lightmode, 0.85);
     .card-title {
       color: $main;
     }
@@ -18,11 +24,11 @@
   .devider {
     height: 1px;
     width: 100%;
-    background: transparentize($background, 0.85);
+    background: transparentize($lightmode, 0.85);
   }
   .main-card-content {
     @include flex-center;
-    @include font(24px, $color-lm-font);
+    @include font(24px, $lightmode);
     &.vertical {
       flex-direction: column;
     }
@@ -46,7 +52,7 @@
       padding: 1.5rem;
       transition: color 0.1s ease-in-out;
       &:hover {
-        color: darken($main, 30);
+        color: lighten($main, 30);
       }
     }
     .card-content {
@@ -63,7 +69,7 @@
           align-items: flex-start;
           flex-direction: column;
           font-size: xx-small;
-          color: transparentize($color-lm-font, 0.2);
+          color: transparentize($lightmode, 0.2);
           .predicted-event-spend-number {
             color: #ff2364;
             font-size: medium;
@@ -74,7 +80,7 @@
         }
         .card-stats-whells {
           @include flex-center;
-          @include font(x-small, $color-lm-font);
+          @include font(x-small, $lightmode);
           gap: $GAP;
           .card-whell {
             $size: 3rem;
@@ -93,7 +99,7 @@
               transform: translate(-50%, -50%);
               width: 90%;
               height: 90%;
-              background: white;
+              background: $darkmode;
               border-radius: 50%;
             }
             span {
@@ -118,20 +124,20 @@
           border-radius: 0.4rem;
           padding: 0.4rem 0.8rem;
           margin-left: $GAP;
-          color: darken($main, 25);
+          color: lighten($main, 25);
         }
       }
       .formatted-addres {
         font-size: medium;
-        color: lighten($color-lm-font, 15);
+        color: lighten($lightmode, 15);
       }
       .time,
       .date {
         font-size: small;
-        color: transparentize($color-lm-font, 0.3);
+        color: transparentize($lightmode, 0.3);
       }
       .date {
-        color: transparentize($color-lm-font, 0.6);
+        color: transparentize($lightmode, 0.6);
       }
     }
     .tags,
@@ -139,12 +145,62 @@
       @include flex-center;
       gap: $GAP;
       .label {
-        background: transparentize($color-lm-font, 0.9);
+        background: transparentize($lightmode, 0.9);
         text-transform: uppercase;
         padding: 0.4rem 0.8rem;
         font-size: x-small;
         border-radius: 20px;
       }
+    }
+  }
+}
+
+.light-mode .category-card {
+  background: white;
+  &:hover {
+    box-shadow: -20px 24px 64px transparentize($darkmode, 0.85);
+    .card-title {
+      color: $main;
+    }
+  }
+  .devider {
+    background: transparentize($background, 0.85);
+  }
+  .main-card-content {
+    color: $darkmode;
+    .card-button:hover {
+      color: darken($main, 30);
+    }
+
+    .card-content {
+      .card-stats {
+        .predicted-event-spend {
+          color: transparentize($darkmode, 0.2);
+        }
+        .card-stats-whells {
+          color: $darkmode;
+          .card-whell::before {
+            background: white;
+          }
+        }
+      }
+      .card-content-title {
+        .event-state {
+          color: darken($main, 25);
+        }
+      }
+      .formatted-addres {
+        color: darken($darkmode, 15);
+      }
+      .time {
+        color: transparentize($darkmode, 0.3);
+      }
+      .date {
+        color: transparentize($darkmode, 0.6);
+      }
+    }
+    .labels .label {
+      background: transparentize($darkmode, 0.9);
     }
   }
 }

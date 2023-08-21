@@ -1,6 +1,10 @@
 @import "./constants.scss";
 
 .layout {
+  background: $darkmode;
+  &.light-mode {
+    background: $lightmode;
+  }
   .slider-container {
     height: 100vh;
     z-index: -1;
@@ -32,7 +36,7 @@
 .header {
   @include flex-center;
   z-index: 9999;
-  background: transparent;
+  background: transparentize($background, 0.15);
   height: $NAVBAR_HEIGHT;
   justify-content: space-between;
   @include font(1rem, $color-dm-font);
@@ -61,9 +65,31 @@
       padding: 0.7rem 1rem;
       margin: 4px;
       transition: background-color 0.1s ease-in-out;
+      border: none;
       &:hover {
         background-color: lighten($main, 5);
       }
+    }
+    .btn-theme {
+      svg {
+        fill: white;
+      }
+      &:hover {
+        background: transparentize($background, 0.25);
+      }
+    }
+  }
+}
+
+.header.light-mode {
+  background: transparentize(white, 0.25);
+  color: darken($background, 15);
+  .btn-theme {
+    svg {
+      fill: transparentize(darken($background, 15), 0.25);
+    }
+    &:hover {
+      background: transparentize(white, 0.25);
     }
   }
 }

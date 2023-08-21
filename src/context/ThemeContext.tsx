@@ -1,17 +1,15 @@
 import React, { useState, useContext, createContext, ReactElement, useCallback } from "react";
 
-type ThemeType = {
-  theme: "light" | "dark";
-};
+type ThemeType = "light" | "dark";
 
-export const initState: ThemeType = { theme: "light" };
+export const initState: ThemeType = "light";
 
 const useThemeContext = (defaultTheme: ThemeType) => {
   const [theme, setTheme] = useState(defaultTheme);
 
   const changeTheme = useCallback(() => {
-    setTheme({ theme: theme.theme === "light" ? "dark" : "light" });
-  }, []);
+    setTheme(theme === "light" ? "dark" : "light");
+  }, [theme]);
 
   return { theme, changeTheme };
 };
@@ -25,12 +23,13 @@ const initContextState: useThemeContextType = {
 
 export const ThemeContext = createContext<useThemeContextType>(initContextState);
 
-type ChildrenType = {
+interface ThemeProviderProps {
   children: ReactElement | null;
-};
+  theme: ThemeType;
+}
 
-export const ThemeProvider = ({ children, ...initState }: ChildrenType & ThemeType) => {
-  return <ThemeContext.Provider value={useThemeContext(initState)}>{children}</ThemeContext.Provider>;
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, ...initState }) => {
+  return <ThemeContext.Provider value={useThemeContext(initState.theme)}>{children}</ThemeContext.Provider>;
 };
 
 type useThemeHookType = {

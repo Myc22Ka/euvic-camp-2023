@@ -11,10 +11,10 @@
       @include flex-center;
       gap: $GAP;
       flex-direction: column;
-      background: transparentize($main, 0.7);
+      background: transparentize(lighten($background, 15), 0.7);
       transition: background-color 0.3s ease-in-out;
       padding: 1rem;
-      @include font(1.7rem, black);
+      @include font(1.7rem, white);
       cursor: pointer;
       &:hover {
         background: transparentize($main, 0.3);
@@ -36,5 +36,12 @@
         background: adjust-hue($main, 5 * $i);
       }
     }
+  }
+}
+
+.light-mode .section .categories {
+  .category {
+    background: transparentize($main, 0.7);
+    color: $darkmode;
   }
 }
