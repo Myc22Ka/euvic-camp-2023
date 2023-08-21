@@ -15,7 +15,6 @@
       height: 100%;
       background-size: cover;
       background-position: center;
-      background-attachment: fixed;
 
       @for $i from 0 to 4 {
         &.img#{$i} {
@@ -53,7 +52,7 @@
   .nav-bar {
     @include flex-center;
     gap: $GAP;
-    .button {
+    .btn-flat {
       background-color: $main;
       border-radius: 0.3rem;
       @include font(1rem, $color-dm-font);

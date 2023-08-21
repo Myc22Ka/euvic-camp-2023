@@ -26,8 +26,8 @@ const SliderHome: React.FC = () => {
       <Carousel>
         {SLIDER_CONTENT.map((slide, key) => {
           return (
-            <Carousel.Item key={key}>
-              <div className={`slider-img img2`} />
+            <Carousel.Item key={key} interval={5000}>
+              <div className={`slider-img img${key}`} />
               <Carousel.Caption>
                 <h3>{slide.header}</h3>
                 <p>{slide.content}</p>
