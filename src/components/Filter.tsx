@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useRef } from "react";
 import { Dropdown } from "react-bootstrap";
 import { useTheme } from "../context/ThemeContext";
-import { ITEMS, sortFromAtoZ } from "../utils/filters";
+import { ITEMS, OPTIONS, sortFromAtoZ } from "../utils/filters";
 
 type FilterPropsType = {
   changeEventsDisplay: (newEventsDisplay: EventfulEvent[]) => void;
@@ -15,9 +15,17 @@ const Filter: React.FC<FilterPropsType> = ({ changeEventsDisplay, events }) => {
   const handleClick = useCallback(
     (eventKey: any) => {
       setActive(eventKey);
-      //   const newEventDisplay = sortFromAtoZ(events);
-      //   changeEventsDisplay(newEventDisplay);
-      sortFromAtoZ(events);
+      let newEventDisplay: EventfulEvent[] = [];
+      eventKey /= 2;
+      console.log(eventKey);
+      if (Math.floor(eventKey) !== eventKey) {
+        newEventDisplay = [...sortFromAtoZ(events, OPTIONS[Math.floor(eventKey)])].reverse();
+        changeEventsDisplay(newEventDisplay);
+        return;
+      }
+
+      newEventDisplay = sortFromAtoZ(events, OPTIONS[eventKey]);
+      changeEventsDisplay(newEventDisplay);
     },
     [events]
   );

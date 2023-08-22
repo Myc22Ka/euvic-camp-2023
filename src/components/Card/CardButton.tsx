@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAccordionButton } from "react-bootstrap";
 
 interface CardButtonProps {
@@ -6,13 +6,15 @@ interface CardButtonProps {
 }
 
 const CardButton: React.FC<CardButtonProps> = ({ eventKey }) => {
+  const [active, setActive] = useState(false);
   const handleClick = useAccordionButton(eventKey, (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
+    setActive(!active);
   });
 
   return (
     <div className={`card-button`} onClick={handleClick}>
-      more details
+      {!active ? "+ more" : "- hide"} details
     </div>
   );
 };

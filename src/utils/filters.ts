@@ -1,22 +1,35 @@
-export const sortFromAtoZ = (events: EventfulEvent[]) => {
-  // hell no :)
+type sortParamType = "start" | "phq_attendance" | "rank" | "local_rank" | "duration" | "title";
+
+export const sortFromAtoZ = (events: EventfulEvent[], sortParam: sortParamType) => {
+  const newArray = events.flatMap((item) => {
+    return item.results.map((event) => ({
+      count: item.count,
+      location_id: item.location_id,
+      results: [event],
+    }));
+  });
+
+  if (sortParam === "title") newArray.sort((a, b) => a.results[0].title.localeCompare(b.results[0].title));
+  else if (sortParam === "start")
+    newArray.sort((a, b) => new Date(a.results[0].start).setHours(0) - new Date(b.results[0].start).setHours(0));
+  else newArray.sort((a, b) => +b.results[0][sortParam] - +a.results[0][sortParam]);
+
+  return newArray;
 };
 
 export const ITEMS = [
   { name: "Earliest start date" },
   { name: "Latest start date" },
-  { name: "Earliest date added" },
-  { name: "Latest date added" },
   { name: "Highest PHQ Rank" },
   { name: "Lowest PHQ Rank" },
   { name: "Highest Local Rank" },
   { name: "Lowest Local Rank" },
   { name: "Highest PHQ attendance" },
   { name: "Lowest PHQ attendance" },
-  { name: "Shortest duration" },
   { name: "Longest duration" },
+  { name: "Shortest duration" },
   { name: "Title (A-Z)" },
   { name: "Title (Z-A)" },
-  { name: "Highest relevance" },
-  { name: "Lowest relevance" },
 ];
+
+export const OPTIONS: sortParamType[] = ["start", "rank", "local_rank", "phq_attendance", "duration", "title"];

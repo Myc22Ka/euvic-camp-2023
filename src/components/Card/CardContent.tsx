@@ -30,6 +30,7 @@ export const CardContent: React.FC<CardContentProps> = ({
           <div className="time">{formatDateTimeRange(event.start, event.end, event.duration)}</div>
         </div>
         <CardStats event={event} />
+        duration: {event.duration}
       </div>
       <div className="card-flex">
         <div className="tags">
