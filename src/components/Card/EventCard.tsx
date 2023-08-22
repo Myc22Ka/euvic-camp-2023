@@ -15,7 +15,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event, location, active, s
   const findAddress = (event: resultsEvent, location: EventfulEvent) => {
     return (
       event.entities[0]?.formatted_address ??
-      savedLocations?.find((id) => id.location_id === location.location_id)?.formatted_address.slice(0, -8)
+      savedLocations?.find((id) => id.location_id === location.location_id)?.formatted_address
     );
   };
 

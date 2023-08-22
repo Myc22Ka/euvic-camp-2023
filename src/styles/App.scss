@@ -51,3 +51,12 @@ html {
 .dropdown-item {
   width: unset !important;
 }
+
+.dropdown-menu.show a {
+  font-family: "Montserrat" !important;
+  font-weight: bold !important;
+  font-size: small !important;
+  &:focus {
+    background: $main;
+  }
+}
