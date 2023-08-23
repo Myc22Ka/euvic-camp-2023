@@ -32,10 +32,10 @@ const Header: React.FC<HeaderProps> = ({ home }) => {
         >
           {theme === "light" ? <BsFillSunFill /> : <BsFillMoonFill />}
         </Button>
-        <Link to="sign in">
+        <Link to="/sign in">
           <Button variant="flat">Sign In</Button>
         </Link>
-        <Link to="sign out">
+        <Link to="/sign out">
           <Button variant="flat">Sign Out</Button>
         </Link>
       </div>

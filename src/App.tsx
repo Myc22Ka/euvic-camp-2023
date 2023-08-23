@@ -23,7 +23,7 @@ const App: React.FC = () => {
               <Route
                 key={key}
                 index={key === 0}
-                path={key !== 0 ? `:${route.url}` : undefined}
+                path={key !== 0 ? `/${route.url}` : undefined}
                 element={<route.component />}
               />
             );

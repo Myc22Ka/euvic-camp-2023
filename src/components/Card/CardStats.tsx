@@ -14,6 +14,10 @@ export const CardStats: React.FC<CardStatsProps> = ({ event }) => {
           <span className="predicted-event-spend-number">${event.predicted_event_spend?.toLocaleString() ?? 0}</span>
           <span>Predicted Event Spend (USD)</span>
         </div>
+        <div className="predicted-event-spend">
+          <span className="predicted-event-spend-number black">{event.phq_attendance?.toLocaleString() ?? 0}</span>
+          <span>PHQ Attendance</span>
+        </div>
         <div className="card-stats-whells">
           <CardWhell background={styles.main} rank={event.rank} label="PHQ" filter={true} />
           <CardWhell background={styles.error} rank={event.local_rank} label="Local" filter={false} />

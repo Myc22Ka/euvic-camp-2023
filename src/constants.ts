@@ -35,4 +35,6 @@ export const defaultFetchOptions: FetchRequest = {
   category: "Sports",
   limit: 25,
   location: "all",
+  name: "",
+  status: "active",
 };

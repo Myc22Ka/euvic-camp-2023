@@ -1,6 +1,6 @@
 type sortParamType = "start" | "phq_attendance" | "rank" | "local_rank" | "duration" | "title";
 
-export const sortFromAtoZ = (events: EventfulEvent[], sortParam: sortParamType) => {
+export const filterEvents = (events: EventfulEvent[], sortParam: sortParamType) => {
   const newArray = events.flatMap((item) => {
     return item.results.map((event) => ({
       count: item.count,
@@ -12,7 +12,13 @@ export const sortFromAtoZ = (events: EventfulEvent[], sortParam: sortParamType) 
   if (sortParam === "title") newArray.sort((a, b) => a.results[0].title.localeCompare(b.results[0].title));
   else if (sortParam === "start")
     newArray.sort((a, b) => new Date(a.results[0].start).setHours(0) - new Date(b.results[0].start).setHours(0));
-  else newArray.sort((a, b) => +b.results[0][sortParam] - +a.results[0][sortParam]);
+  else
+    newArray.sort((a, b) => {
+      if (a.results[0][sortParam] === undefined) return 1; // Move a to the end
+      if (b.results[0][sortParam] === undefined) return -1; // Move b to the end
+
+      return +b.results[0][sortParam] - +a.results[0][sortParam];
+    });
 
   return newArray;
 };

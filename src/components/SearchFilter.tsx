@@ -33,9 +33,9 @@ const SearchFilter: React.FC<SearchFilterPropsType> = ({ reFetchEvents, savedLoc
     setNewOptions((prev) => ({ ...prev, ...newOption }));
   };
 
-  useEffect(() => {
-    console.log(newOptions);
-  }, [newOptions]);
+  // useEffect(() => {
+  //   console.log(newOptions);
+  // }, [newOptions]);
 
   return (
     <React.Fragment>
@@ -44,52 +44,62 @@ const SearchFilter: React.FC<SearchFilterPropsType> = ({ reFetchEvents, savedLoc
       </Button>
 
       <Offcanvas show={show} onHide={() => setShow(false)}>
-        <Form onSubmit={handleSubmit} style={{ height: "100vh" }}>
-          <Offcanvas.Header closeButton className="d-flex align-items-center">
-            <Offcanvas.Title>
-              <Stack direction="horizontal" gap={1}>
-                <MdOutlineSearch fontSize={24} />
-                <Form.Control size="sm" type="text" placeholder="Event Search" />
-              </Stack>
-            </Offcanvas.Title>
-          </Offcanvas.Header>
-          <Offcanvas.Body style={{ height: "100%" }}>
-            <InputGroup className="mb-2">
-              <InputGroup.Text id="basic-addon1">Locations</InputGroup.Text>
-              <Form.Select
-                onChange={(e) => changeOptions({ location: e.target.value })}
-                defaultValue={defaultFetchOptions.location}
-              >
-                {savedLocations?.map((location) => (
-                  <option value={location.location_id} key={location.location_id}>
-                    {location.name}
-                  </option>
-                ))}
-                <option value="all">All locations</option>
-              </Form.Select>
-            </InputGroup>
-
-            <InputGroup className="mb-2">
-              <InputGroup.Text id="basic-addon2">Limit</InputGroup.Text>
+        <Offcanvas.Header closeButton className="d-flex align-items-center">
+          <Offcanvas.Title>
+            <Stack direction="horizontal" gap={1}>
+              <MdOutlineSearch fontSize={24} />
               <Form.Control
                 size="sm"
-                type="number"
-                max={defaultFetchOptions.limit * 5}
-                min={0}
-                onChange={(e) => changeOptions({ limit: +e.target.value })}
-                defaultValue={defaultFetchOptions.limit}
+                type="text"
+                placeholder="Event Search"
+                onChange={(e) => changeOptions({ name: e.target.value })}
               />
-            </InputGroup>
+            </Stack>
+          </Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body style={{ height: "100%" }} className="d-flex flex-column justify-content-between">
+          <Form onSubmit={handleSubmit} className="d-flex flex-column h-100 justify-content-between">
+            <Form.Group>
+              <InputGroup className="mb-2">
+                <InputGroup.Text id="basic-addon1">Locations</InputGroup.Text>
+                <Form.Select
+                  onChange={(e) => changeOptions({ location: e.target.value })}
+                  defaultValue={defaultFetchOptions.location}
+                  disabled={Boolean(newOptions.name)}
+                >
+                  {savedLocations?.map((location) => (
+                    <option value={location.location_id} key={location.location_id}>
+                      {location.name}
+                    </option>
+                  ))}
+                  <option value="all">All locations</option>
+                </Form.Select>
+              </InputGroup>
 
-            <InputGroup className="mb-2">
-              <DropDownCheckBox changeOptions={changeOptions} selected={category.split("-").join(" ")} />
-            </InputGroup>
+              <InputGroup className="mb-2">
+                <InputGroup.Text id="basic-addon2">Limit</InputGroup.Text>
+                <Form.Control
+                  size="sm"
+                  type="number"
+                  max={defaultFetchOptions.limit * 5}
+                  min={0}
+                  onChange={(e) => changeOptions({ limit: +e.target.value })}
+                  defaultValue={defaultFetchOptions.limit}
+                />
+              </InputGroup>
 
-            <Button variant="primary" type="submit">
-              Submit
+              <Stack direction="horizontal" gap={1}>
+                <InputGroup className="mb-2">
+                  <DropDownCheckBox changeOptions={changeOptions} selected={category.split("-").join(" ")} />
+                </InputGroup>
+              </Stack>
+            </Form.Group>
+
+            <Button variant="flat" type="submit">
+              Find Events
             </Button>
-          </Offcanvas.Body>
-        </Form>
+          </Form>
+        </Offcanvas.Body>
       </Offcanvas>
     </React.Fragment>
   );

@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useRef } from "react";
 import { Dropdown } from "react-bootstrap";
 import { useTheme } from "../context/ThemeContext";
-import { ITEMS, OPTIONS, sortFromAtoZ } from "../utils/filters";
+import { ITEMS, OPTIONS, filterEvents } from "../utils/filters";
 
 type FilterPropsType = {
   changeEventsDisplay: (newEventsDisplay: EventfulEvent[]) => void;
@@ -18,12 +18,12 @@ const SideFilter: React.FC<FilterPropsType> = ({ changeEventsDisplay, events }) 
       let newEventDisplay: EventfulEvent[] = [];
       eventKey /= 2;
       if (Math.floor(eventKey) !== eventKey) {
-        newEventDisplay = [...sortFromAtoZ(events, OPTIONS[Math.floor(eventKey)])].reverse();
+        newEventDisplay = [...filterEvents(events, OPTIONS[Math.floor(eventKey)])].reverse();
         changeEventsDisplay(newEventDisplay);
         return;
       }
 
-      newEventDisplay = sortFromAtoZ(events, OPTIONS[eventKey]);
+      newEventDisplay = filterEvents(events, OPTIONS[eventKey]);
       changeEventsDisplay(newEventDisplay);
     },
     [events]

@@ -56,20 +56,6 @@
   .nav-bar {
     @include flex-center;
     gap: $GAP;
-    .btn-flat {
-      background-color: $main;
-      border-radius: 0.3rem;
-      @include font(1rem, $color-dm-font);
-      @include flex-center;
-      box-sizing: border-box;
-      padding: 0.7rem 1rem;
-      margin: 4px;
-      transition: background-color 0.1s ease-in-out;
-      border: none;
-      &:hover {
-        background-color: lighten($main, 5);
-      }
-    }
     .btn-theme {
       svg {
         fill: white;
@@ -91,5 +77,23 @@
     &:hover {
       background: transparentize(white, 0.25);
     }
+  }
+}
+
+.btn.btn-flat {
+  background-color: $main;
+  border-radius: 0.3rem;
+  @include font(1rem, $color-dm-font);
+  @include flex-center;
+  box-sizing: border-box;
+  padding: 0.7rem 1rem;
+  margin: 4px;
+  transition: background-color 0.1s ease-in-out;
+  border: none;
+  &:hover {
+    background-color: lighten($main, 5);
+  }
+  &:active {
+    background-color: darken($main, 5) !important;
   }
 }

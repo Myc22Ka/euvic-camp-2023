@@ -96,4 +96,6 @@ type FetchRequest = {
   category: string;
   limit: number;
   location: string;
+  name: string;
+  status: "active" | "predicted" | "canceled";
 };
