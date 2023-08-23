@@ -93,6 +93,7 @@ interface Route {
 }
 
 type FetchRequest = {
-  category?: string;
-  limit?: number;
+  category: string;
+  limit: number;
+  location: string;
 };

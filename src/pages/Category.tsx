@@ -14,7 +14,7 @@ import { defaultFetchOptions } from "../constants";
 const Category: React.FC = () => {
   const location = useLocation();
   const category = useRef<string>(decodeURIComponent(location.pathname.substring(1)).split(" ").join("-"));
-  const [options, setOptions] = useState<FetchRequest>({ category: category.current });
+  const [options, setOptions] = useState<FetchRequest>({ ...defaultFetchOptions, category: category.current });
 
   const reFetchEvents = useCallback((newOptions: FetchRequest) => {
     setOptions(newOptions);
@@ -32,7 +32,7 @@ const Category: React.FC = () => {
           {events.reduce((acc, event) => event.results.length + acc, 0)}
         </Badge>
         <div className="badge-text p-2">Events</div>
-        <SearchFilter reFetchEvents={reFetchEvents} />
+        <SearchFilter reFetchEvents={reFetchEvents} savedLocations={savedLocations} category={category.current} />
         <SideFilter changeEventsDisplay={changeEventsDisplay} events={events} />
       </Stack>
       {loading ? (
