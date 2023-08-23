@@ -5,18 +5,21 @@ import { CATEGORIES } from "../constants";
 
 type DropDownCheckboxPropsType = {
   changeOptions: (newOption: Partial<FetchRequest>) => void;
+  selected: string;
 };
 
-const DropDownCheckBox: React.FC<DropDownCheckboxPropsType> = ({ changeOptions }) => {
+const DropDownCheckBox: React.FC<DropDownCheckboxPropsType> = ({ changeOptions, selected }) => {
   const checkBoxRef = useRef<HTMLDivElement>(null);
-  const [isChecked, setIsChecked] = useState(CATEGORIES.map((e, i) => ({ name: e.name, checked: false, id: i })));
+  const [isChecked, setIsChecked] = useState(
+    CATEGORIES.map((e, i) => ({ name: e.name.split(" ").join("-"), checked: e.name === selected, id: i }))
+  );
   const { theme } = useTheme();
 
   const handleSetAllCategories = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsChecked((prev) => prev.map((item) => ({ ...item, checked: e.target.checked })));
 
     changeOptions({
-      category: e.target.checked ? CATEGORIES.map((category) => category.name.toLowerCase()).join(",") : "",
+      category: e.target.checked ? isChecked.map((category) => category.name.toLowerCase()).join(",") : "",
     });
   };
 

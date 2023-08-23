@@ -41,12 +41,10 @@ export const useFetchEvents = ({ category, limit, location }: FetchRequest) => {
     }
 
     if (location !== "all") {
-      fetchLocation(location).then((data) => {
-        if (data) {
-          setEvents([data]);
-        }
-        setLoading(false);
-      });
+      fetchLocation(location)
+        .then((data) => setEvents([data]))
+        .catch(() => setErr("An error occurred while fetching data"))
+        .finally(() => setLoading(false));
       return;
     }
 

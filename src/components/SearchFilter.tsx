@@ -74,7 +74,7 @@ const SearchFilter: React.FC<SearchFilterPropsType> = ({ reFetchEvents, savedLoc
               <Form.Control
                 size="sm"
                 type="number"
-                max={50}
+                max={defaultFetchOptions.limit * 5}
                 min={0}
                 onChange={(e) => changeOptions({ limit: +e.target.value })}
                 defaultValue={defaultFetchOptions.limit}
@@ -82,7 +82,7 @@ const SearchFilter: React.FC<SearchFilterPropsType> = ({ reFetchEvents, savedLoc
             </InputGroup>
 
             <InputGroup className="mb-2">
-              <DropDownCheckBox changeOptions={changeOptions} />
+              <DropDownCheckBox changeOptions={changeOptions} selected={category.split("-").join(" ")} />
             </InputGroup>
 
             <Button variant="primary" type="submit">

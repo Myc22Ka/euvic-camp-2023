@@ -33,6 +33,6 @@ export const CATEGORIES: Array<{ name: string; icon: IconType }> = [
 
 export const defaultFetchOptions: FetchRequest = {
   category: "Sports",
-  limit: 10,
+  limit: 25,
   location: "all",
 };
