@@ -11,6 +11,7 @@ const useThemeContext = (defaultTheme: ThemeType) => {
   const changeTheme = useCallback(() => {
     setTheme(theme === "light" ? "dark" : "light");
 
+    document.body.setAttribute("data-bs-theme", theme === "light" ? "dark" : "light");
     document.documentElement.style.backgroundColor = theme === "light" ? styles.darkmode : styles.lightmode;
   }, [theme]);
 

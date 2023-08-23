@@ -1,31 +1,24 @@
 import { useEffect, useState, useCallback } from "react";
 import { useSavedLocations } from "./useSavedLocations";
 
-type FetchRequest = {
-  category?: string;
-};
-
-export const useFetchEvents = ({ category }: FetchRequest) => {
+export const useFetchEvents = ({ category, limit }: FetchRequest) => {
   const { savedLocations } = useSavedLocations();
   const [events, setEvents] = useState<EventfulEvent[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [err, setErr] = useState<string | null>(null);
 
-  const changeEventsDisplay = useCallback(
-    (newEventsDisplay: EventfulEvent[]) => {
-      setEvents(newEventsDisplay);
-    },
-    [events]
-  );
+  const changeEventsDisplay = useCallback((newEventsDisplay: EventfulEvent[]) => {
+    setEvents(newEventsDisplay);
+  }, []);
 
   useEffect(() => {
-    const tempEventsArray: EventfulEvent[] = [];
     setLoading(true);
+    const tempEventsArray: EventfulEvent[] = [];
 
     const fetchLocation = async (location: string) => {
       try {
         const response = await fetch(
-          `https://api.predicthq.com/v1/saved-locations/${location}/insights/events?limit=25&category=${category?.toLocaleLowerCase()}`,
+          `https://api.predicthq.com/v1/saved-locations/${location}/insights/events?category=${category?.toLocaleLowerCase()}&limit=${limit}`,
           {
             headers: {
               Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
@@ -34,26 +27,28 @@ export const useFetchEvents = ({ category }: FetchRequest) => {
           }
         );
 
-        await response.json().then((data) => {
-          tempEventsArray.push({ ...data, location_id: location });
-        });
-
-        setEvents(events);
+        const data = await response.json();
+        tempEventsArray.push({ ...data, location_id: location });
       } catch (err) {
         setErr("An error occurred while fetching data.");
-      } finally {
-        setLoading(false);
       }
     };
 
-    if (!savedLocations) return setErr("An error occurred while fetching saved locations.");
-
-    const locationIds = savedLocations.map((location) => location.location_id);
-    locationIds.map((location) => {
-      fetchLocation(location);
-    });
-    setEvents(tempEventsArray);
-  }, [savedLocations]);
+    if (!savedLocations) {
+      setErr("An error occurred while fetching saved locations.");
+    } else {
+      Promise.all(savedLocations.map((location) => fetchLocation(location.location_id)))
+        .then(() => {
+          setEvents(tempEventsArray);
+        })
+        .catch(() => {
+          setErr("An error occurred while fetching data.");
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  }, [savedLocations, category, limit]);
 
   return { events, err, loading, savedLocations, changeEventsDisplay };
 };

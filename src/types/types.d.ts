@@ -91,3 +91,8 @@ interface Route {
   component: React.FC;
   url: string;
 }
+
+type FetchRequest = {
+  category?: string;
+  limit?: number;
+};

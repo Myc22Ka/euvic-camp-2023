@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useCallback, useEffect } from "react";
 import { useFetchEvents } from "../hooks/useFetchEvents";
 import { useLocation } from "react-router-dom";
 import Loader from "../components/Loader";
@@ -6,16 +6,24 @@ import "../styles/Category.scss";
 import Layout from "../layout/Layout";
 import Card from "../components/Card/Card";
 import Section from "../layout/Section";
-import { Badge, InputGroup, Stack, Form } from "react-bootstrap";
+import { Badge, Stack } from "react-bootstrap";
 import SideFilter from "../components/SideFilter";
 import SearchFilter from "../components/SearchFilter";
-import { MdSearch } from "react-icons/md";
+import { defaultFetchOptions } from "../constants";
 
 const Category: React.FC = () => {
   const location = useLocation();
   const category = useRef<string>(decodeURIComponent(location.pathname.substring(1)).split(" ").join("-"));
+  const [options, setOptions] = useState<FetchRequest>({ category: category.current });
 
-  const { events, loading, savedLocations, changeEventsDisplay } = useFetchEvents({ category: category.current });
+  const reFetchEvents = useCallback((newOptions: FetchRequest) => {
+    setOptions(newOptions);
+  }, []);
+
+  const { events, loading, savedLocations, changeEventsDisplay } = useFetchEvents({
+    ...defaultFetchOptions,
+    ...options,
+  });
 
   return (
     <Layout>
@@ -24,7 +32,7 @@ const Category: React.FC = () => {
           {events.reduce((acc, event) => event.results.length + acc, 0)}
         </Badge>
         <div className="badge-text p-2">Events</div>
-        <SearchFilter changeEventsDisplay={changeEventsDisplay} events={events} />
+        <SearchFilter reFetchEvents={reFetchEvents} />
         <SideFilter changeEventsDisplay={changeEventsDisplay} events={events} />
       </Stack>
       {loading ? (

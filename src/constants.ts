@@ -30,3 +30,8 @@ export const CATEGORIES: Array<{ name: string; icon: IconType }> = [
   { name: "Community", icon: MdPeople },
   { name: "Academic", icon: MdSchool },
 ];
+
+export const defaultFetchOptions: FetchRequest = {
+  category: "Sports",
+  limit: 10,
+};
