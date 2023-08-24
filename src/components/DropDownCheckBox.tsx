@@ -1,62 +1,77 @@
 import React, { useRef, useState } from "react";
 import { Dropdown, Form } from "react-bootstrap";
 import { useTheme } from "../context/ThemeContext";
-import { CATEGORIES } from "../constants";
+import { CATEGORIES_TYPE } from "../constants";
 
 type DropDownCheckboxPropsType = {
   changeOptions: (newOption: Partial<FetchRequest>) => void;
-  selected: string;
+  parameter: "status" | "category" | "label";
+  currentCategory: string;
+  itemsList: CATEGORIES_TYPE | Array<string>;
+  title: string;
 };
 
-const DropDownCheckBox: React.FC<DropDownCheckboxPropsType> = ({ changeOptions, selected }) => {
+const DropDownCheckBox: React.FC<DropDownCheckboxPropsType> = ({
+  changeOptions,
+  parameter,
+  currentCategory,
+  itemsList,
+  title,
+}) => {
   const checkBoxRef = useRef<HTMLDivElement>(null);
   const [isChecked, setIsChecked] = useState(
-    CATEGORIES.map((e, i) => ({ name: e.name.split(" ").join("-"), checked: e.name === selected, id: i }))
+    itemsList.map((e, i) => ({
+      [parameter]: typeof e === "string" ? e : e.name.split(" ").join("-"),
+      checked: typeof e === "string" ? e === "Active" : e.name === currentCategory,
+      id: i,
+    }))
   );
   const { theme } = useTheme();
 
-  const handleSetAllCategories = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSetAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsChecked((prev) => prev.map((item) => ({ ...item, checked: e.target.checked })));
 
+    const result = e.target.checked ? isChecked.map((prop) => String(prop[parameter]).toLowerCase()).join(",") : "";
+
     changeOptions({
-      category: e.target.checked ? isChecked.map((category) => category.name.toLowerCase()).join(",") : "",
+      [parameter]: result,
     });
   };
 
   const handleChange = (id: number) => {
     const updatedChecked = isChecked.map((item) => (item.id === id ? { ...item, checked: !item.checked } : item));
 
-    const selectedCategories = updatedChecked
+    const selectedCheckBoxes = updatedChecked
       .filter((item) => item.checked)
-      .map((item) => item.name.toLowerCase())
+      .map((item) => String(item[parameter]).toLowerCase())
       .join(",");
 
     setIsChecked(updatedChecked);
 
-    changeOptions({ category: selectedCategories });
+    changeOptions({ [parameter]: selectedCheckBoxes });
   };
 
   return (
     <Dropdown>
       <Dropdown.Toggle variant={theme} id="dropdown-custom-components">
-        Categories
+        {title}
       </Dropdown.Toggle>
 
       <Dropdown.Menu variant={theme} className="p-2">
-        <Form.Check type="checkbox" id={`default-checkbox0`} label="All" onChange={handleSetAllCategories} />
+        {parameter === "category" ? (
+          <Form.Check type="checkbox" id={`default-checkbox-${parameter}-0`} label="All" onChange={handleSetAll} />
+        ) : null}
         <div ref={checkBoxRef}>
-          {CATEGORIES.map((item, key) => {
-            return (
-              <Form.Check
-                key={key}
-                type="checkbox"
-                id={`default-checkbox${key + 1}`}
-                label={item.name}
-                checked={isChecked[key].checked}
-                onChange={() => handleChange(key)}
-              />
-            );
-          })}
+          {itemsList.map((item, key) => (
+            <Form.Check
+              key={key}
+              type="checkbox"
+              id={`default-checkbox-${parameter}-${key + 1}`}
+              label={typeof item === "string" ? item : item.name}
+              checked={isChecked[key].checked}
+              onChange={() => handleChange(key)}
+            />
+          ))}
         </div>
       </Dropdown.Menu>
     </Dropdown>

@@ -71,6 +71,18 @@ type SummaryInsight = {
   unscheduled_event_count: number;
 };
 
+type CountsType = {
+  count: number;
+  top_rank: number;
+  top_local_rank: number;
+  top_aviation_rank: number;
+  rank_levels: Record<string, number>;
+  local_rank_levels: Record<string, number>;
+  aviation_rank_levels: Record<string, number>;
+  categories: Record<string, number>;
+  labels: Record<string, number>;
+};
+
 type SavedLocations = {
   location_id: string;
   create_dt: string;
@@ -98,4 +110,5 @@ type FetchRequest = {
   location: string;
   name: string;
   status: "active" | "predicted" | "canceled";
+  labels: string;
 };

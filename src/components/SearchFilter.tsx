@@ -1,9 +1,10 @@
-import React, { useState, useCallback, useRef, useEffect } from "react";
-import { Button, Offcanvas, Form, Stack, InputGroup, Dropdown } from "react-bootstrap";
+import React, { useState, useCallback, useEffect } from "react";
+import { Button, Offcanvas, Form, Stack, InputGroup } from "react-bootstrap";
 import { MdOutlineSearch } from "react-icons/md";
 import { useTheme } from "../context/ThemeContext";
-import { defaultFetchOptions } from "../constants";
+import { CATEGORIES, defaultFetchOptions } from "../constants";
 import DropDownCheckBox from "./DropDownCheckBox";
+import { useFetchCounts } from "../hooks/useFetchCounts";
 
 type SearchFilterPropsType = {
   reFetchEvents: (newOptions: FetchRequest) => void;
@@ -14,6 +15,7 @@ type SearchFilterPropsType = {
 const SearchFilter: React.FC<SearchFilterPropsType> = ({ reFetchEvents, savedLocations, category }) => {
   const [show, setShow] = useState(false);
   const [newOptions, setNewOptions] = useState(defaultFetchOptions);
+  const { counts } = useFetchCounts();
   const { theme } = useTheme();
 
   const open = () => {
@@ -29,13 +31,11 @@ const SearchFilter: React.FC<SearchFilterPropsType> = ({ reFetchEvents, savedLoc
     setNewOptions(defaultFetchOptions);
   };
 
-  const changeOptions = (newOption: Partial<FetchRequest>) => {
-    setNewOptions((prev) => ({ ...prev, ...newOption }));
-  };
+  const changeOptions = (newOption: Partial<FetchRequest>) => setNewOptions((prev) => ({ ...prev, ...newOption }));
 
-  // useEffect(() => {
-  //   console.log(newOptions);
-  // }, [newOptions]);
+  useEffect(() => {
+    console.log(newOptions);
+  }, [newOptions]);
 
   return (
     <React.Fragment>
@@ -65,7 +65,7 @@ const SearchFilter: React.FC<SearchFilterPropsType> = ({ reFetchEvents, savedLoc
                 <Form.Select
                   onChange={(e) => changeOptions({ location: e.target.value })}
                   defaultValue={defaultFetchOptions.location}
-                  disabled={Boolean(newOptions.name)}
+                  disabled={Boolean(newOptions.name) || !["active", ""].includes(newOptions.status)}
                 >
                   {savedLocations?.map((location) => (
                     <option value={location.location_id} key={location.location_id}>
@@ -89,8 +89,32 @@ const SearchFilter: React.FC<SearchFilterPropsType> = ({ reFetchEvents, savedLoc
               </InputGroup>
 
               <Stack direction="horizontal" gap={1}>
-                <InputGroup className="mb-2">
-                  <DropDownCheckBox changeOptions={changeOptions} selected={category.split("-").join(" ")} />
+                <InputGroup className="mb-2 justify-content-center">
+                  <DropDownCheckBox
+                    title="Categories"
+                    changeOptions={changeOptions}
+                    parameter="category"
+                    currentCategory={category}
+                    itemsList={CATEGORIES}
+                  />
+                </InputGroup>
+                <InputGroup className="mb-2 justify-content-center">
+                  <DropDownCheckBox
+                    title="Labels"
+                    changeOptions={changeOptions}
+                    parameter="label"
+                    currentCategory={category}
+                    itemsList={counts ? Object.keys(counts?.labels) : []}
+                  />
+                </InputGroup>
+                <InputGroup className="mb-2 justify-content-center">
+                  <DropDownCheckBox
+                    title="Event status"
+                    changeOptions={changeOptions}
+                    parameter="status"
+                    currentCategory={category}
+                    itemsList={["Unset", "Active", "Predicted", "Canceled"]}
+                  />
                 </InputGroup>
               </Stack>
             </Form.Group>

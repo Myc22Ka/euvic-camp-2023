@@ -20,7 +20,9 @@ export const BUTTON_ANIMATION: AnimationProps & { whileTap: TargetAndTransition;
   },
 };
 
-export const CATEGORIES: Array<{ name: string; icon: IconType }> = [
+export type CATEGORIES_TYPE = Array<{ name: string; icon: IconType }>;
+
+export const CATEGORIES: CATEGORIES_TYPE = [
   { name: "Sports", icon: MdSportsBaseball },
   { name: "Conferences", icon: MdSlideshow },
   { name: "Expos", icon: MdShoppingCart },
@@ -37,4 +39,5 @@ export const defaultFetchOptions: FetchRequest = {
   location: "all",
   name: "",
   status: "active",
+  labels: "",
 };

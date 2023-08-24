@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useSavedLocations } from "./useSavedLocations";
 
-export const useFetchEvents = ({ category, limit, location, name }: FetchRequest) => {
+export const useFetchEvents = ({ category, limit, location, name, status, labels }: FetchRequest) => {
   const { savedLocations } = useSavedLocations();
   const [events, setEvents] = useState<EventfulEvent[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -14,15 +14,20 @@ export const useFetchEvents = ({ category, limit, location, name }: FetchRequest
   useEffect(() => {
     setLoading(true);
 
-    const categoryString = category ? `category=${category?.toLocaleLowerCase()}` : "";
+    const categoryString = category ? `category=${category.toLocaleLowerCase()}` : "";
     const limitString = limit ? `&limit=${limit}` : "";
     const nameString = name ? `&q=${name}` : "";
+    const statusString = status ? `&state=${status}` : "";
+    const labelsString = labels ? `&label=${labels}` : "";
 
     const fetchLocation = async (location: string) => {
-      const request = name
-        ? `https://api.predicthq.com/v1/events?${categoryString}${nameString}`
-        : `https://api.predicthq.com/v1/saved-locations/${location}/insights/events?${categoryString}${limitString}`;
+      const baseEndpoint = name
+        ? `https://api.predicthq.com/v1/events`
+        : `https://api.predicthq.com/v1/saved-locations/${location}/insights/events`;
 
+      const request = `${baseEndpoint}?${categoryString}${nameString}${statusString}${limitString}${labelsString}`;
+
+      console.log(request);
       try {
         const response = await fetch(request, {
           headers: {
