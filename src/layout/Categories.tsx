@@ -6,7 +6,7 @@ const Categories: React.FC = () => {
   return (
     <div className="categories">
       {CATEGORIES.map((category, key) => (
-        <Link key={key} to={category.name}>
+        <Link key={key} to="category">
           <div className="category">
             <category.icon />
             <div className="category-title">{category.name}</div>

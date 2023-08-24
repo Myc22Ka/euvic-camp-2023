@@ -26,8 +26,8 @@ export const ActiveDetails: React.FC<ActiveDetailsProps> = ({ event, location, f
         </CardContentDetails>
         <CardContentDetails title="Venue">
           <div>
-            <div className="time">{findAddress(event, location).split(",")[0]}</div>
-            <div className="date">{findAddress(event, location).split(",")[1]}</div>
+            <div className="time">{findAddress(event, location)?.split(",")[0]}</div>
+            <div className="date">{findAddress(event, location)?.split(",")[1]}</div>
           </div>
         </CardContentDetails>
       </div>

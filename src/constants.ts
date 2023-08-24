@@ -34,10 +34,10 @@ export const CATEGORIES: CATEGORIES_TYPE = [
 ];
 
 export const defaultFetchOptions: FetchRequest = {
-  category: "Sports",
-  limit: 25,
+  category: "",
+  limit: 10,
   location: "all",
-  name: "",
-  status: "active",
-  labels: "",
+  q: "",
+  state: "",
+  label: "",
 };

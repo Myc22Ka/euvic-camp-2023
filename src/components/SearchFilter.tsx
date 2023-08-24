@@ -9,33 +9,38 @@ import { useFetchCounts } from "../hooks/useFetchCounts";
 type SearchFilterPropsType = {
   reFetchEvents: (newOptions: FetchRequest) => void;
   savedLocations: SavedLocations[] | null;
-  category: string;
 };
 
-const SearchFilter: React.FC<SearchFilterPropsType> = ({ reFetchEvents, savedLocations, category }) => {
+const SearchFilter: React.FC<SearchFilterPropsType> = ({ reFetchEvents, savedLocations }) => {
   const [show, setShow] = useState(false);
   const [newOptions, setNewOptions] = useState(defaultFetchOptions);
   const { counts } = useFetchCounts();
   const { theme } = useTheme();
 
-  const open = () => {
+  const open = useCallback(() => {
     document.body.setAttribute("data-bs-theme", theme);
     setShow(true);
-  };
+  }, [theme]);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
-    setShow(false);
-    reFetchEvents(newOptions);
-    setNewOptions(defaultFetchOptions);
-  };
+  const handleSubmit = useCallback(
+    (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      event.stopPropagation();
+      setShow(false);
+      reFetchEvents(newOptions);
+      setNewOptions(defaultFetchOptions);
+    },
+    [reFetchEvents, newOptions]
+  );
 
-  const changeOptions = (newOption: Partial<FetchRequest>) => setNewOptions((prev) => ({ ...prev, ...newOption }));
+  const changeOptions = useCallback(
+    (newOption: Partial<FetchRequest>) => setNewOptions((prev) => ({ ...prev, ...newOption })),
+    [newOptions]
+  );
 
-  useEffect(() => {
-    console.log(newOptions);
-  }, [newOptions]);
+  // useEffect(() => {
+  //   console.log(newOptions);
+  // }, [newOptions]);
 
   return (
     <React.Fragment>
@@ -52,7 +57,8 @@ const SearchFilter: React.FC<SearchFilterPropsType> = ({ reFetchEvents, savedLoc
                 size="sm"
                 type="text"
                 placeholder="Event Search"
-                onChange={(e) => changeOptions({ name: e.target.value })}
+                onChange={(e) => changeOptions({ q: e.target.value, location: "" })}
+                name="search"
               />
             </Stack>
           </Offcanvas.Title>
@@ -65,7 +71,8 @@ const SearchFilter: React.FC<SearchFilterPropsType> = ({ reFetchEvents, savedLoc
                 <Form.Select
                   onChange={(e) => changeOptions({ location: e.target.value })}
                   defaultValue={defaultFetchOptions.location}
-                  disabled={Boolean(newOptions.name) || !["active", ""].includes(newOptions.status)}
+                  disabled={Boolean(newOptions.q) || Boolean(newOptions.state) || Boolean(newOptions.label)}
+                  name="locations"
                 >
                   {savedLocations?.map((location) => (
                     <option value={location.location_id} key={location.location_id}>
@@ -85,6 +92,7 @@ const SearchFilter: React.FC<SearchFilterPropsType> = ({ reFetchEvents, savedLoc
                   min={0}
                   onChange={(e) => changeOptions({ limit: +e.target.value })}
                   defaultValue={defaultFetchOptions.limit}
+                  name="limit"
                 />
               </InputGroup>
 
@@ -94,7 +102,6 @@ const SearchFilter: React.FC<SearchFilterPropsType> = ({ reFetchEvents, savedLoc
                     title="Categories"
                     changeOptions={changeOptions}
                     parameter="category"
-                    currentCategory={category}
                     itemsList={CATEGORIES}
                   />
                 </InputGroup>
@@ -103,7 +110,6 @@ const SearchFilter: React.FC<SearchFilterPropsType> = ({ reFetchEvents, savedLoc
                     title="Labels"
                     changeOptions={changeOptions}
                     parameter="label"
-                    currentCategory={category}
                     itemsList={counts ? Object.keys(counts?.labels) : []}
                   />
                 </InputGroup>
@@ -111,9 +117,8 @@ const SearchFilter: React.FC<SearchFilterPropsType> = ({ reFetchEvents, savedLoc
                   <DropDownCheckBox
                     title="Event status"
                     changeOptions={changeOptions}
-                    parameter="status"
-                    currentCategory={category}
-                    itemsList={["Unset", "Active", "Predicted", "Canceled"]}
+                    parameter="state"
+                    itemsList={["Active", "Predicted", "Canceled"]}
                   />
                 </InputGroup>
               </Stack>

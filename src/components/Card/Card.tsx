@@ -9,15 +9,9 @@ type CardProps = {
 };
 
 const Card: React.FC<CardProps> = ({ event, savedLocations, location }) => {
-  const [active, setActive] = useState(false);
-
-  const toggleActive = () => {
-    setActive(!active); // Toggle the active state
-  };
-
   return (
     <Link to={event.id}>
-      <EventCard event={event} location={location} active={active} savedLocations={savedLocations} />
+      <EventCard event={event} location={location} savedLocations={savedLocations} />
     </Link>
   );
 };

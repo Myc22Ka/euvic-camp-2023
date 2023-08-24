@@ -7,11 +7,10 @@ import { Accordion } from "react-bootstrap";
 type EventCardProps = {
   event: resultsEvent;
   location: EventfulEvent;
-  active: boolean;
   savedLocations: SavedLocations[] | null;
 };
 
-export const EventCard: React.FC<EventCardProps> = ({ event, location, active, savedLocations }) => {
+export const EventCard: React.FC<EventCardProps> = ({ event, location, savedLocations }) => {
   const findAddress = (event: resultsEvent, location: EventfulEvent) => {
     return (
       event.entities[0]?.formatted_address ??
@@ -21,7 +20,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event, location, active, s
 
   return (
     <Accordion defaultActiveKey="0">
-      <div className="category-card" style={{ borderColor: active ? styles.main : "transparent" }}>
+      <div className="category-card">
         <CardContent event={event} location={location} findAddress={findAddress} eventKey={event.id} />
         <Accordion.Collapse eventKey={event.id}>
           <ActiveDetails event={event} location={location} findAddress={findAddress} />

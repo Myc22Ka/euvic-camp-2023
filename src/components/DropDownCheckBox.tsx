@@ -5,24 +5,17 @@ import { CATEGORIES_TYPE } from "../constants";
 
 type DropDownCheckboxPropsType = {
   changeOptions: (newOption: Partial<FetchRequest>) => void;
-  parameter: "status" | "category" | "label";
-  currentCategory: string;
+  parameter: "state" | "category" | "label";
   itemsList: CATEGORIES_TYPE | Array<string>;
   title: string;
 };
 
-const DropDownCheckBox: React.FC<DropDownCheckboxPropsType> = ({
-  changeOptions,
-  parameter,
-  currentCategory,
-  itemsList,
-  title,
-}) => {
+const DropDownCheckBox: React.FC<DropDownCheckboxPropsType> = ({ changeOptions, parameter, itemsList, title }) => {
   const checkBoxRef = useRef<HTMLDivElement>(null);
   const [isChecked, setIsChecked] = useState(
     itemsList.map((e, i) => ({
       [parameter]: typeof e === "string" ? e : e.name.split(" ").join("-"),
-      checked: typeof e === "string" ? e === "Active" : e.name === currentCategory,
+      checked: false,
       id: i,
     }))
   );
@@ -57,7 +50,11 @@ const DropDownCheckBox: React.FC<DropDownCheckboxPropsType> = ({
         {title}
       </Dropdown.Toggle>
 
-      <Dropdown.Menu variant={theme} className="p-2">
+      <Dropdown.Menu
+        variant={theme}
+        className="p-2"
+        style={{ maxHeight: 400, overflowY: parameter === "label" ? "scroll" : "hidden", width: "175%" }}
+      >
         {parameter === "category" ? (
           <Form.Check type="checkbox" id={`default-checkbox-${parameter}-0`} label="All" onChange={handleSetAll} />
         ) : null}

@@ -1,6 +1,7 @@
 import SignIn from "./auth/SignIn";
 import Home from "./pages/Home";
 import SignOut from "./auth/SignOut";
+import Category from "./pages/Category";
 
 export const routes: Route[] = [
   {
@@ -14,5 +15,9 @@ export const routes: Route[] = [
   {
     url: "sign out",
     component: SignOut,
+  },
+  {
+    url: "category",
+    component: Category,
   },
 ];

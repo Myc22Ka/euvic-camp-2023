@@ -4,8 +4,6 @@ import { Route, Routes } from "react-router-dom";
 import { useDocumentTitle } from "./hooks/useDocumentTitle";
 import { routes } from "./routes";
 import PageNotFound from "./pages/PageNotFound";
-import Category from "./pages/Category";
-import { CATEGORIES } from "./constants";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ThemeProvider, initState } from "./context/ThemeContext";
 
@@ -28,9 +26,6 @@ const App: React.FC = () => {
               />
             );
           })}
-          {CATEGORIES.map((category, key) => (
-            <Route key={key} path={`:${category.name}`} element={<Category />} />
-          ))}
         </Route>
       </Routes>
     </ThemeProvider>
