@@ -37,6 +37,7 @@ const PHQFromTo: React.FC<PQHFromToPropsType> = ({ changeOptions }) => {
           size="sm"
           type="number"
           defaultValue={defaultFetchOptions.phq_attendance.lte}
+          min={attendance.gte ? attendance.gte + 1 : 0}
           onChange={handleLte}
         />
       </FloatingLabel>

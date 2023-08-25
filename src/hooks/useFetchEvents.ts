@@ -1,9 +1,11 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useSavedLocations } from "./useSavedLocations";
 import { useNavigate } from "react-router-dom";
-import { defaultFetchOptions } from "../constants";
+import { generateRequest } from "../constants";
 
 export const useFetchEvents = ({ category, limit, location, q, state, label, phq_attendance }: FetchRequest) => {
+  const request = generateRequest({ category, limit, location, q, state, label, phq_attendance });
+
   const navigate = useNavigate();
   const { savedLocations } = useSavedLocations();
   const [events, setEvents] = useState<EventfulEvent[]>([]);
@@ -14,49 +16,11 @@ export const useFetchEvents = ({ category, limit, location, q, state, label, phq
     setEvents(newEventsDisplay);
   }, []);
 
-  useEffect(() => {
-    setLoading(true);
+  const fetchLocation = useCallback(
+    async (location: string, request: string) => {
+      let baseEndpoint: string = `https://api.predicthq.com/v1/saved-locations/${location}/insights/events`;
 
-    const options: FetchRequest = {
-      location: location,
-      category: category,
-      limit: limit,
-      q: q,
-      state: state,
-      label: label,
-      phq_attendance: {
-        gte: phq_attendance.gte,
-        lte: phq_attendance.lte,
-      },
-    };
-
-    const request = `?${Object.entries(options)
-      .map((option) => {
-        const key = option[0];
-        const value = option[1];
-
-        if (key === "phq_attendance" && typeof value === "object") {
-          const phqValue = value as { gte: number; lte: number };
-
-          const gte =
-            phqValue.gte !== defaultFetchOptions.phq_attendance.gte ? `phq_attendance.gte=${phqValue.gte}` : "";
-          const lte =
-            phqValue.lte !== defaultFetchOptions.phq_attendance.lte ? `phq_attendance.lte=${phqValue.lte}` : "";
-
-          return lte || gte ? [gte, lte].filter((e) => e).join("&") : "";
-        }
-
-        return value && defaultFetchOptions[key as keyof FetchRequest] !== value ? `${key}=${value}` : "";
-      })
-      .slice(1)
-      .filter((e) => e)
-      .join("&")}`;
-
-    const fetchLocation = async (location: string) => {
-      const baseEndpoint =
-        q || label || phq_attendance.gte || phq_attendance.lte
-          ? `https://api.predicthq.com/v1/events`
-          : `https://api.predicthq.com/v1/saved-locations/${location}/insights/events`;
+      if (q || label || phq_attendance.gte || phq_attendance.lte) baseEndpoint = `https://api.predicthq.com/v1/events`;
 
       try {
         const response = await fetch(baseEndpoint + request, {
@@ -72,7 +36,12 @@ export const useFetchEvents = ({ category, limit, location, q, state, label, phq
         setErr("An error occurred while fetching data.");
         return null; // Return null to indicate an error
       }
-    };
+    },
+    [q, label, phq_attendance.gte, phq_attendance.lte]
+  );
+
+  useEffect(() => {
+    setLoading(true);
 
     if (!savedLocations) {
       setErr("An error occurred while fetching saved locations.");
@@ -82,7 +51,7 @@ export const useFetchEvents = ({ category, limit, location, q, state, label, phq
 
     if (location === "all") {
       // Fetch data for all locations
-      Promise.all(savedLocations.map((location) => fetchLocation(location.location_id)))
+      Promise.all(savedLocations.map((location) => fetchLocation(location.location_id, request)))
         .then((results) => {
           const filteredResults = results.filter((result) => result !== null);
           if (request.length > 1) navigate(request);
@@ -96,10 +65,9 @@ export const useFetchEvents = ({ category, limit, location, q, state, label, phq
       return;
     }
 
-    fetchLocation(location)
+    fetchLocation(location, request)
       .then((data) => {
         if (request.length > 1) navigate(request);
-
         setEvents([data]);
       })
       .catch(() => setErr("An error occurred while fetching data"))

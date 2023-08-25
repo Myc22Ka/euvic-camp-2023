@@ -22,9 +22,9 @@ const Category: React.FC = () => {
     ...options,
   });
 
-  useEffect(() => {
-    console.log(events);
-  }, [events]);
+  // useEffect(() => {
+  //   console.log(events);
+  // }, [events]);
 
   return (
     <Layout>

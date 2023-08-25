@@ -7,26 +7,19 @@ import CardButton from "./CardButton";
 type CardContentProps = {
   event: resultsEvent;
   location: EventfulEvent;
-  // active: boolean;
-  // toggleActive: () => void;
   findAddress: (event: resultsEvent, location: EventfulEvent) => string;
   eventKey: string;
 };
 
-export const CardContent: React.FC<CardContentProps> = ({
-  event,
-  location,
-  // active,
-  // toggleActive,
-  findAddress,
-  eventKey,
-}) => {
+export const CardContent: React.FC<CardContentProps> = ({ event, location, findAddress, eventKey }) => {
   return (
     <div className="main-card-content vertical">
       <div className="card-flex">
         <div className="card-content">
           <CardContentTitle event={event} />
-          <div className="formatted-addres">{findAddress(event, location)}</div>
+          <div className="formatted-addres">
+            {findAddress(event, location) || event.timezone.split("_").join(" ").replace("/", ", ")}
+          </div>
           <div className="time">{formatDateTimeRange(event.start, event.end, event.duration)}</div>
         </div>
         <CardStats event={event} />
@@ -35,7 +28,7 @@ export const CardContent: React.FC<CardContentProps> = ({
         <div className="tags">
           <div className="icon"></div>
           <div className="labels">
-            {event.labels.map((label, key) => (
+            {Array.from(new Set([...event.labels, ...(event.entities[0]?.labels || [])])).map((label, key) => (
               <div key={key} className="label">
                 {label}
               </div>

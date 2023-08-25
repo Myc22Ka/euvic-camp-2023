@@ -30,6 +30,7 @@ interface Entity {
   formatted_address: string;
   type: string;
   name: string;
+  labels: string[];
 }
 
 interface GeoInfo {

@@ -1,4 +1,3 @@
-import { AnimationProps, TargetAndTransition } from "framer-motion";
 import {
   MdSportsBaseball,
   MdOutlineFestival,
@@ -10,15 +9,6 @@ import {
   MdShoppingCart,
 } from "react-icons/md";
 import { IconType } from "react-icons/lib";
-
-export const BUTTON_ANIMATION: AnimationProps & { whileTap: TargetAndTransition; whileHover: TargetAndTransition } = {
-  whileHover: { scale: 1.05 },
-  whileTap: { scale: 0.95 },
-  transition: {
-    duration: 0.3,
-    ease: "easeOut",
-  },
-};
 
 export type CATEGORIES_TYPE = Array<{ name: string; icon: IconType }>;
 
@@ -44,4 +34,28 @@ export const defaultFetchOptions: FetchRequest = {
     gte: 0,
     lte: 0,
   },
+};
+
+export const generateRequest = (options: FetchRequest): string => {
+  const request = `?${Object.entries(options)
+    .map((option) => {
+      const key = option[0];
+      const value = option[1];
+
+      if (key === "phq_attendance" && typeof value === "object") {
+        const phqValue = value as { gte: number; lte: number };
+
+        const gte = phqValue.gte !== defaultFetchOptions.phq_attendance.gte ? `phq_attendance.gte=${phqValue.gte}` : "";
+        const lte = phqValue.lte !== defaultFetchOptions.phq_attendance.lte ? `phq_attendance.lte=${phqValue.lte}` : "";
+
+        return lte || gte ? [gte, lte].filter((e) => e).join("&") : "";
+      }
+
+      return value && defaultFetchOptions[key as keyof FetchRequest] !== value ? `${key}=${value}` : "";
+    })
+    .slice(1)
+    .filter((e) => e)
+    .join("&")}`;
+
+  return request;
 };
