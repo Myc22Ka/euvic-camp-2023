@@ -1,10 +1,11 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Event Scout",
+  "name": "Discover Exciting Events Near You with Event Scout",
+  "description": "Looking for the best events happening in your area? Event Scout is your go-to platform for finding and exploring a wide range of events, from concerts and festivals to workshops and meetups. Our user-friendly app offers a seamless experience to help you stay connected to the vibrant events scene around you.",
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "16x16",
       "type": "image/x-icon"
     },
     {
@@ -18,7 +19,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/event-scout",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
