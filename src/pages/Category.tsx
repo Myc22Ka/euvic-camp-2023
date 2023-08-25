@@ -9,6 +9,7 @@ import { Badge, Stack } from "react-bootstrap";
 import SideFilter from "../components/SideFilter";
 import SearchFilter from "../components/SearchFilter";
 import { defaultFetchOptions } from "../constants";
+import NoResults from "../components/NoResults";
 
 const Category: React.FC = () => {
   const [options, setOptions] = useState<FetchRequest>({ ...defaultFetchOptions });
@@ -22,9 +23,9 @@ const Category: React.FC = () => {
     ...options,
   });
 
-  // useEffect(() => {
-  //   console.log(events);
-  // }, [events]);
+  useEffect(() => {
+    console.log(events);
+  }, [events]);
 
   return (
     <Layout>
@@ -38,7 +39,7 @@ const Category: React.FC = () => {
       </Stack>
       {loading ? (
         <Loader />
-      ) : (
+      ) : events[0]?.results.length !== 0 ? (
         <Section>
           {events.map((location) =>
             location.results.map((event) => (
@@ -46,6 +47,8 @@ const Category: React.FC = () => {
             ))
           )}
         </Section>
+      ) : (
+        <NoResults />
       )}
     </Layout>
   );

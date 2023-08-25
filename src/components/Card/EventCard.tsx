@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "../../styles/styles.module.scss";
 import { CardContent } from "./CardContent";
 import { ActiveDetails } from "./ActiveDetails";
 import { Accordion } from "react-bootstrap";

@@ -56,6 +56,7 @@ const SearchFilter: React.FC<SearchFilterPropsType> = ({ reFetchEvents, savedLoc
             <Stack direction="horizontal" gap={1}>
               <MdOutlineSearch fontSize={24} />
               <Form.Control
+                autoComplete="off"
                 size="sm"
                 type="text"
                 placeholder="Event Search"
