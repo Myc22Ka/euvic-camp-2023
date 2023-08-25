@@ -1,10 +1,11 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { Button, Offcanvas, Form, Stack, InputGroup } from "react-bootstrap";
 import { MdOutlineSearch } from "react-icons/md";
 import { useTheme } from "../context/ThemeContext";
 import { CATEGORIES, defaultFetchOptions } from "../constants";
 import DropDownCheckBox from "./DropDownCheckBox";
 import { useFetchCounts } from "../hooks/useFetchCounts";
+import PHQFromTo from "./PHQFromTo";
 
 type SearchFilterPropsType = {
   reFetchEvents: (newOptions: FetchRequest) => void;
@@ -14,6 +15,7 @@ type SearchFilterPropsType = {
 const SearchFilter: React.FC<SearchFilterPropsType> = ({ reFetchEvents, savedLocations }) => {
   const [show, setShow] = useState(false);
   const [newOptions, setNewOptions] = useState(defaultFetchOptions);
+  const formRef = useRef(null);
   const { counts } = useFetchCounts();
   const { theme } = useTheme();
 
@@ -23,7 +25,7 @@ const SearchFilter: React.FC<SearchFilterPropsType> = ({ reFetchEvents, savedLoc
   }, [theme]);
 
   const handleSubmit = useCallback(
-    (event: React.FormEvent<HTMLFormElement>) => {
+    (event: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLInputElement>) => {
       event.preventDefault();
       event.stopPropagation();
       setShow(false);
@@ -59,12 +61,15 @@ const SearchFilter: React.FC<SearchFilterPropsType> = ({ reFetchEvents, savedLoc
                 placeholder="Event Search"
                 onChange={(e) => changeOptions({ q: e.target.value, location: "" })}
                 name="search"
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                  if (e.key === "Enter") handleSubmit(e);
+                }}
               />
             </Stack>
           </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body style={{ height: "100%" }} className="d-flex flex-column justify-content-between">
-          <Form onSubmit={handleSubmit} className="d-flex flex-column h-100 justify-content-between">
+          <Form onSubmit={handleSubmit} className="d-flex flex-column h-100 justify-content-between" ref={formRef}>
             <Form.Group>
               <InputGroup className="mb-2">
                 <InputGroup.Text id="basic-addon1">Locations</InputGroup.Text>
@@ -94,6 +99,11 @@ const SearchFilter: React.FC<SearchFilterPropsType> = ({ reFetchEvents, savedLoc
                   defaultValue={defaultFetchOptions.limit}
                   name="limit"
                 />
+              </InputGroup>
+
+              <InputGroup className="mb-2">
+                <InputGroup.Text id="basic-addon3">PHQ Attendance</InputGroup.Text>
+                <PHQFromTo changeOptions={changeOptions} />
               </InputGroup>
 
               <Stack direction="horizontal" gap={1}>

@@ -111,4 +111,8 @@ type FetchRequest = {
   q: string;
   state: "active" | "predicted" | "canceled" | "";
   label: string;
+  phq_attendance: {
+    gte: number;
+    lte: number;
+  };
 };

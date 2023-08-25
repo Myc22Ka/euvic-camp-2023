@@ -45,7 +45,7 @@ const DropDownCheckBox: React.FC<DropDownCheckboxPropsType> = ({ changeOptions, 
   };
 
   return (
-    <Dropdown>
+    <Dropdown as="button">
       <Dropdown.Toggle variant={theme} id="dropdown-custom-components">
         {title}
       </Dropdown.Toggle>

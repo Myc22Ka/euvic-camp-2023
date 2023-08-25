@@ -3,7 +3,7 @@ import { useSavedLocations } from "./useSavedLocations";
 import { useNavigate } from "react-router-dom";
 import { defaultFetchOptions } from "../constants";
 
-export const useFetchEvents = ({ category, limit, location, q, state, label }: FetchRequest) => {
+export const useFetchEvents = ({ category, limit, location, q, state, label, phq_attendance }: FetchRequest) => {
   const navigate = useNavigate();
   const { savedLocations } = useSavedLocations();
   const [events, setEvents] = useState<EventfulEvent[]>([]);
@@ -24,12 +24,27 @@ export const useFetchEvents = ({ category, limit, location, q, state, label }: F
       q: q,
       state: state,
       label: label,
+      phq_attendance: {
+        gte: phq_attendance.gte,
+        lte: phq_attendance.lte,
+      },
     };
 
     const request = `?${Object.entries(options)
       .map((option) => {
         const key = option[0];
         const value = option[1];
+
+        if (key === "phq_attendance" && typeof value === "object") {
+          const phqValue = value as { gte: number; lte: number };
+
+          const gte =
+            phqValue.gte !== defaultFetchOptions.phq_attendance.gte ? `phq_attendance.gte=${phqValue.gte}` : "";
+          const lte =
+            phqValue.lte !== defaultFetchOptions.phq_attendance.lte ? `phq_attendance.lte=${phqValue.lte}` : "";
+
+          return lte || gte ? [gte, lte].filter((e) => e).join("&") : "";
+        }
 
         return value && defaultFetchOptions[key as keyof FetchRequest] !== value ? `${key}=${value}` : "";
       })
@@ -39,7 +54,7 @@ export const useFetchEvents = ({ category, limit, location, q, state, label }: F
 
     const fetchLocation = async (location: string) => {
       const baseEndpoint =
-        q || label
+        q || label || phq_attendance.gte || phq_attendance.lte
           ? `https://api.predicthq.com/v1/events`
           : `https://api.predicthq.com/v1/saved-locations/${location}/insights/events`;
 
@@ -70,7 +85,8 @@ export const useFetchEvents = ({ category, limit, location, q, state, label }: F
       Promise.all(savedLocations.map((location) => fetchLocation(location.location_id)))
         .then((results) => {
           const filteredResults = results.filter((result) => result !== null);
-          navigate(request);
+          if (request.length > 1) navigate(request);
+
           setEvents(filteredResults); // Update events array with fetched data
         })
         .catch(() => {
@@ -82,12 +98,13 @@ export const useFetchEvents = ({ category, limit, location, q, state, label }: F
 
     fetchLocation(location)
       .then((data) => {
-        navigate(request);
+        if (request.length > 1) navigate(request);
+
         setEvents([data]);
       })
       .catch(() => setErr("An error occurred while fetching data"))
       .finally(() => setLoading(false));
-  }, [savedLocations, category, limit, location, q, state, label]);
+  }, [savedLocations, category, limit, location, q, state, label, phq_attendance.gte, phq_attendance.lte]);
 
   return { events, err, loading, savedLocations, changeEventsDisplay };
 };

@@ -23,7 +23,7 @@
 
       @for $i from 0 to 4 {
         &.img#{$i} {
-          background-image: url("../assets/img/slider#{$i}.webP");
+          background-image: url("../assets/img/slide#{$i}.webp");
         }
       }
     }

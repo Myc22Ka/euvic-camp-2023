@@ -40,4 +40,8 @@ export const defaultFetchOptions: FetchRequest = {
   q: "",
   state: "",
   label: "",
+  phq_attendance: {
+    gte: 0,
+    lte: 0,
+  },
 };
