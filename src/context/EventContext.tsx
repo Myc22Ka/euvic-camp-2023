@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback, ReactNode } from "react";
+import React, { createContext, useContext, useState, useCallback, ReactNode, useEffect } from "react";
 import { useFetchEvents } from "../hooks/useFetchEvents";
 import { defaultFetchOptions } from "../constants";
 
@@ -8,6 +8,7 @@ interface EventsContextType {
   savedLocations: SavedLocations[] | null;
   changeEventsDisplay: (newEventsDisplay: EventfulEvent[]) => void;
   reFetchEvents: (newOptions: FetchRequest) => void;
+  options: FetchRequest;
 }
 
 const EventsContext = createContext<EventsContextType | undefined>(undefined);
@@ -18,10 +19,15 @@ interface EventsProviderProps {
 
 export const EventsProvider: React.FC<EventsProviderProps> = ({ children }) => {
   const [options, setOptions] = useState<FetchRequest>({ ...defaultFetchOptions });
+
   const { events, loading, savedLocations, changeEventsDisplay } = useFetchEvents({
     ...defaultFetchOptions,
     ...options,
   });
+
+  useEffect(() => {
+    changeEventsDisplay(events);
+  }, [events, changeEventsDisplay]);
 
   const reFetchEvents = useCallback((newOptions: FetchRequest) => {
     setOptions(newOptions);
@@ -33,6 +39,7 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({ children }) => {
     savedLocations,
     changeEventsDisplay,
     reFetchEvents,
+    options,
   };
 
   return <EventsContext.Provider value={contextValue}>{children}</EventsContext.Provider>;

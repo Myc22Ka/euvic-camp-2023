@@ -9,11 +9,11 @@ import SideFilter from "../components/SideFilter";
 import SearchFilter from "../components/SearchFilter";
 import NoResults from "../components/NoResults";
 import { useEventsContext } from "../context/EventContext";
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
 
 const Category: React.FC = () => {
   const { events, loading } = useEventsContext();
-
-  console.log(events);
+  useDocumentTitle();
 
   return (
     <Layout>

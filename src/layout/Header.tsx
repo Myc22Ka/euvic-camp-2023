@@ -22,12 +22,12 @@ const Header: React.FC<HeaderProps> = ({ home }) => {
         </div>
       </Link>
       <div className="nav-bar d-flex justify-content-start gap-2 p-2" style={{ flex: 1 }}>
-        <Link to="/" className="link p-2">
+        <Link to="/" className="link p-2" style={{ fontWeight: "bold" }}>
           <Button variant="href" className="ms-auto p-2 align-self-center">
             Home
           </Button>
         </Link>
-        <Link to="/category" className="link p-2">
+        <Link to="/category" className="link p-2" style={{ fontWeight: "bold" }}>
           <Button variant="href" className="ms-auto p-2 align-self-center">
             Events
           </Button>
@@ -40,10 +40,10 @@ const Header: React.FC<HeaderProps> = ({ home }) => {
         >
           {theme === "light" ? <BsFillSunFill /> : <BsFillMoonFill />}
         </Button>
-        <Link to="/sign in">
+        <Link to="/sign in" className="align-items-center d-flex">
           <Button variant="flat">Sign In</Button>
         </Link>
-        <Link to="/sign out">
+        <Link to="/sign out" className="align-items-center d-flex">
           <Button variant="flat">Sign Out</Button>
         </Link>
       </div>

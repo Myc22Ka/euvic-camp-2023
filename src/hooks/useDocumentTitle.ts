@@ -1,15 +1,19 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-export const useDocumentTitle = () => {
+export const useDocumentTitle = (url: string = "") => {
   const location = useLocation();
 
   useEffect(() => {
-    const setTitle = (): string => {
+    if (url) {
+      document.title = url;
+      return;
+    }
+
+    const setTitle = () => {
       const path = location.pathname.substring(1);
-      if (!path) {
-        return "Home";
-      }
+      if (!path) return "Home";
+
       const pathArray = path.split("/").map((segment) => decodeURIComponent(segment));
 
       return pathArray[pathArray.length - 1]
@@ -19,5 +23,5 @@ export const useDocumentTitle = () => {
     };
 
     document.title = setTitle();
-  }, [location]);
+  }, [location, url]);
 };

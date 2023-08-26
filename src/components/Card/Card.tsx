@@ -10,10 +10,14 @@ type CardProps = {
 };
 
 const Card: React.FC<CardProps> = ({ index }) => {
-  const { events } = useEventsContext();
+  const { events, savedLocations } = useEventsContext();
+
+  const handleLinkClick = () => {
+    localStorage.setItem("lastClickedEvent", JSON.stringify({ event: events[index], savedLocations }));
+  };
 
   return (
-    <Link to={events[index].results[0].id}>
+    <Link to={events[index].results[0].id} onClick={handleLinkClick}>
       <Accordion defaultActiveKey="0">
         <div className="category-card">
           <CardContent index={index} />

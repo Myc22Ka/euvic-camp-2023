@@ -24,9 +24,9 @@ export const CATEGORIES: CATEGORIES_TYPE = [
 ];
 
 export const defaultFetchOptions: FetchRequest = {
+  location: "all",
   category: "",
   limit: 10,
-  location: "all",
   q: "",
   state: "",
   label: "",
@@ -42,6 +42,8 @@ export const generateRequest = (options: FetchRequest): string => {
       const key = option[0];
       const value = option[1];
 
+      if (key === "location") return "";
+
       if (key === "phq_attendance" && typeof value === "object") {
         const phqValue = value as { gte: number; lte: number };
 
@@ -53,7 +55,6 @@ export const generateRequest = (options: FetchRequest): string => {
 
       return value && defaultFetchOptions[key as keyof FetchRequest] !== value ? `${key}=${value}` : "";
     })
-    .slice(1)
     .filter((e) => e)
     .join("&")}`;
 

@@ -2,11 +2,12 @@ import React, { useState, useCallback, useEffect, useRef } from "react";
 import { Button, Offcanvas, Form, Stack, InputGroup } from "react-bootstrap";
 import { MdOutlineSearch } from "react-icons/md";
 import { useTheme } from "../context/ThemeContext";
-import { CATEGORIES, defaultFetchOptions } from "../constants";
+import { CATEGORIES, defaultFetchOptions, generateRequest } from "../constants";
 import DropDownCheckBox from "./DropDownCheckBox";
 import { useFetchCounts } from "../hooks/useFetchCounts";
 import PHQFromTo from "./PHQFromTo";
 import { useEventsContext } from "../context/EventContext";
+import { useNavigate } from "react-router-dom";
 
 const SearchFilter: React.FC = () => {
   const [show, setShow] = useState(false);
@@ -15,6 +16,7 @@ const SearchFilter: React.FC = () => {
   const { reFetchEvents, savedLocations } = useEventsContext();
   const { counts } = useFetchCounts();
   const { theme } = useTheme();
+  const navigate = useNavigate();
 
   const open = useCallback(() => {
     document.body.setAttribute("data-bs-theme", theme);
@@ -28,6 +30,7 @@ const SearchFilter: React.FC = () => {
       setShow(false);
       reFetchEvents(newOptions);
       setNewOptions(defaultFetchOptions);
+      navigate(generateRequest(newOptions));
     },
     [reFetchEvents, newOptions]
   );

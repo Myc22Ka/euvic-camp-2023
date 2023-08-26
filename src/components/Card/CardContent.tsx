@@ -21,7 +21,7 @@ export const CardContent: React.FC<CardContentProps> = ({ index }) => {
           <CardContentTitle event={event} />
           <div className="formatted-addres">
             {findAddress(event, events[index], savedLocations) ||
-              event.timezone.split("_").join(" ").replace("/", ", ")}
+              event.timezone?.split("_").join(" ").replace("/", ", ")}
           </div>
           <div className="time">{formatDateTimeRange(event.start, event.end, event.duration)}</div>
         </div>

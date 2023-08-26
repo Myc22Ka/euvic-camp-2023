@@ -1,5 +1,6 @@
-import React, { useState, useContext, createContext, ReactElement, useCallback } from "react";
+import React, { useState, useContext, createContext, ReactElement, useCallback, useEffect } from "react";
 import styles from "../styles/styles.module.scss";
+import { useLocation } from "react-router-dom";
 
 type ThemeType = "light" | "dark";
 
@@ -33,6 +34,11 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, ...initState }) => {
+  const location = useLocation();
+  useEffect(() => {
+    document.body.setAttribute("data-bs-theme", initState.theme);
+  }, [location]);
+
   return <ThemeContext.Provider value={useThemeContext(initState.theme)}>{children}</ThemeContext.Provider>;
 };
 
