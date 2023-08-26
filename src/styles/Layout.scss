@@ -37,16 +37,23 @@
 .header {
   @include flex-center;
   z-index: 9999;
-  background: transparentize($background, 0.15);
+  background: darken($main, 25);
   height: $NAVBAR_HEIGHT;
   justify-content: space-between;
   @include font(1rem, $color-dm-font);
-  padding: 1rem;
   width: 100%;
   box-sizing: border-box;
-  .app-name {
-    font-size: larger;
+  .logo-img {
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    background-position: center;
+    background-image: url("../assets/img/logo.png");
   }
+  .app-name {
+    @include font(larger, $lightmode);
+  }
+
   &.home {
     position: absolute;
     top: 0;
@@ -54,9 +61,10 @@
     background: transparentize($background, 0.55);
   }
   .nav-bar {
-    @include flex-center;
-    gap: $GAP;
-    .btn-theme {
+    .btn-theme,
+    .btn-href {
+      width: 50px;
+      height: 50px;
       svg {
         fill: white;
       }
@@ -64,18 +72,9 @@
         background: transparentize($background, 0.25);
       }
     }
-  }
-}
-
-.header.light-mode {
-  background: transparentize(white, 0.25);
-  color: darken($background, 15);
-  .btn-theme {
-    svg {
-      fill: transparentize(darken($background, 15), 0.25);
-    }
-    &:hover {
-      background: transparentize(white, 0.25);
+    .btn-href {
+      width: auto;
+      color: white;
     }
   }
 }

@@ -6,16 +6,13 @@ import { CATEGORIES, defaultFetchOptions } from "../constants";
 import DropDownCheckBox from "./DropDownCheckBox";
 import { useFetchCounts } from "../hooks/useFetchCounts";
 import PHQFromTo from "./PHQFromTo";
+import { useEventsContext } from "../context/EventContext";
 
-type SearchFilterPropsType = {
-  reFetchEvents: (newOptions: FetchRequest) => void;
-  savedLocations: SavedLocations[] | null;
-};
-
-const SearchFilter: React.FC<SearchFilterPropsType> = ({ reFetchEvents, savedLocations }) => {
+const SearchFilter: React.FC = () => {
   const [show, setShow] = useState(false);
   const [newOptions, setNewOptions] = useState(defaultFetchOptions);
   const formRef = useRef(null);
+  const { reFetchEvents, savedLocations } = useEventsContext();
   const { counts } = useFetchCounts();
   const { theme } = useTheme();
 
@@ -39,10 +36,6 @@ const SearchFilter: React.FC<SearchFilterPropsType> = ({ reFetchEvents, savedLoc
     (newOption: Partial<FetchRequest>) => setNewOptions((prev) => ({ ...prev, ...newOption })),
     [newOptions]
   );
-
-  // useEffect(() => {
-  //   console.log(newOptions);
-  // }, [newOptions]);
 
   return (
     <React.Fragment>

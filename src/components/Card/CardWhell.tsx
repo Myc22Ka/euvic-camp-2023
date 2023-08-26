@@ -16,7 +16,7 @@ export const CardWhell: React.FC<CardWhellProps> = ({ background, rank, label, f
         filter: filter ? `hue-rotate(${rank * 3.6}deg)` : "none",
       }}
     >
-      <span className="card-whell-number">{rank}</span>
+      <span className="card-whell-number">{rank ?? 0}</span>
       <span>{label}</span>
     </div>
   );

@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { useSavedLocations } from "./useSavedLocations";
 import { useNavigate } from "react-router-dom";
 import { generateRequest } from "../constants";
+import { eventFixArray } from "../utils/filters";
 
 export const useFetchEvents = ({ category, limit, location, q, state, label, phq_attendance }: FetchRequest) => {
   const request = generateRequest({ category, limit, location, q, state, label, phq_attendance });
@@ -56,7 +57,7 @@ export const useFetchEvents = ({ category, limit, location, q, state, label, phq
           const filteredResults = results.filter((result) => result !== null);
           if (request.length > 1) navigate(request);
 
-          setEvents(filteredResults); // Update events array with fetched data
+          setEvents(eventFixArray(filteredResults)); // Update events array with fetched data
         })
         .catch(() => {
           setErr("An error occurred while fetching data.");
@@ -68,7 +69,8 @@ export const useFetchEvents = ({ category, limit, location, q, state, label, phq
     fetchLocation(location, request)
       .then((data) => {
         if (request.length > 1) navigate(request);
-        setEvents([data]);
+
+        setEvents(eventFixArray([data]));
       })
       .catch(() => setErr("An error occurred while fetching data"))
       .finally(() => setLoading(false));

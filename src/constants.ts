@@ -59,3 +59,10 @@ export const generateRequest = (options: FetchRequest): string => {
 
   return request;
 };
+
+export const findAddress = (event: resultsEvent, location: EventfulEvent, savedLocations: SavedLocations[] | null) => {
+  return (
+    event.entities[0]?.formatted_address ??
+    savedLocations?.find((id) => id.location_id === location.location_id)?.formatted_address
+  );
+};

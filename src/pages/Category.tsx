@@ -1,5 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { useFetchEvents } from "../hooks/useFetchEvents";
+import React from "react";
 import Loader from "../components/Loader";
 import "../styles/Category.scss";
 import Layout from "../layout/Layout";
@@ -8,24 +7,13 @@ import Section from "../layout/Section";
 import { Badge, Stack } from "react-bootstrap";
 import SideFilter from "../components/SideFilter";
 import SearchFilter from "../components/SearchFilter";
-import { defaultFetchOptions } from "../constants";
 import NoResults from "../components/NoResults";
+import { useEventsContext } from "../context/EventContext";
 
 const Category: React.FC = () => {
-  const [options, setOptions] = useState<FetchRequest>({ ...defaultFetchOptions });
+  const { events, loading } = useEventsContext();
 
-  const reFetchEvents = useCallback((newOptions: FetchRequest) => {
-    setOptions(newOptions);
-  }, []);
-
-  const { events, loading, savedLocations, changeEventsDisplay } = useFetchEvents({
-    ...defaultFetchOptions,
-    ...options,
-  });
-
-  useEffect(() => {
-    console.log(events);
-  }, [events]);
+  console.log(events);
 
   return (
     <Layout>
@@ -34,18 +22,16 @@ const Category: React.FC = () => {
           {events.reduce((acc, event) => event.results.length + acc, 0)}
         </Badge>
         <div className="badge-text p-2">Events</div>
-        <SearchFilter reFetchEvents={reFetchEvents} savedLocations={savedLocations} />
-        <SideFilter changeEventsDisplay={changeEventsDisplay} events={events} />
+        <SearchFilter />
+        <SideFilter />
       </Stack>
       {loading ? (
         <Loader />
-      ) : events[0]?.results.length !== 0 ? (
+      ) : events.length !== 0 ? (
         <Section>
-          {events.map((location) =>
-            location.results.map((event) => (
-              <Card event={event} savedLocations={savedLocations} key={event.id} location={location} />
-            ))
-          )}
+          {events.map((event, index) => (
+            <Card key={event.results[0].id} index={index} />
+          ))}
         </Section>
       ) : (
         <NoResults />

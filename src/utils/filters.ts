@@ -1,13 +1,7 @@
 type sortParamType = "start" | "phq_attendance" | "rank" | "local_rank" | "duration" | "title";
 
 export const filterEvents = (events: EventfulEvent[], sortParam: sortParamType) => {
-  const newArray = events.flatMap((item) => {
-    return item.results.map((event) => ({
-      count: item.count,
-      location_id: item.location_id,
-      results: [event],
-    }));
-  });
+  const newArray = eventFixArray(events);
 
   if (sortParam === "title") newArray.sort((a, b) => a.results[0].title.localeCompare(b.results[0].title));
   else if (sortParam === "start")
@@ -21,6 +15,16 @@ export const filterEvents = (events: EventfulEvent[], sortParam: sortParamType) 
     });
 
   return newArray;
+};
+
+export const eventFixArray = (events: EventfulEvent[]): EventfulEvent[] => {
+  return events.flatMap((item) => {
+    return item.results.map((event) => ({
+      count: item.count,
+      location_id: item.location_id,
+      results: [event],
+    }));
+  });
 };
 
 export const ITEMS = [

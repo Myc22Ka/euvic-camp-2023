@@ -2,15 +2,12 @@ import React, { useCallback, useState, useRef } from "react";
 import { Dropdown } from "react-bootstrap";
 import { useTheme } from "../context/ThemeContext";
 import { ITEMS, OPTIONS, filterEvents } from "../utils/filters";
+import { useEventsContext } from "../context/EventContext";
 
-type FilterPropsType = {
-  changeEventsDisplay: (newEventsDisplay: EventfulEvent[]) => void;
-  events: EventfulEvent[];
-};
-
-const SideFilter: React.FC<FilterPropsType> = ({ changeEventsDisplay, events }) => {
+const SideFilter: React.FC = () => {
   const [active, setActive] = useState(0);
   const { theme } = useTheme();
+  const { changeEventsDisplay, events } = useEventsContext();
 
   const handleClick = useCallback(
     (eventKey: any) => {

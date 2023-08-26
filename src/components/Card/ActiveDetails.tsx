@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useRef } from "react";
 import { formatDate } from "../../utils/dateFormat";
 import { CardContentDetails } from "./CardContentDetails";
+import { useEventsContext } from "../../context/EventContext";
+import { findAddress } from "../../constants";
 
 type ActiveDetailsProps = {
-  event: resultsEvent;
-  location: EventfulEvent;
-  findAddress: (event: resultsEvent, location: EventfulEvent) => string;
+  index: number;
 };
 
-export const ActiveDetails: React.FC<ActiveDetailsProps> = ({ event, location, findAddress }) => {
+export const ActiveDetails: React.FC<ActiveDetailsProps> = ({ index }) => {
+  const { savedLocations, events } = useEventsContext();
+  const event = useRef(events[index].results[0]).current;
+
   return (
     <React.Fragment>
       <div className="devider"></div>
@@ -26,8 +29,8 @@ export const ActiveDetails: React.FC<ActiveDetailsProps> = ({ event, location, f
         </CardContentDetails>
         <CardContentDetails title="Venue">
           <div>
-            <div className="time">{findAddress(event, location)?.split(",")[0]}</div>
-            <div className="date">{findAddress(event, location)?.split(",")[1]}</div>
+            <div className="time">{findAddress(event, events[index], savedLocations)?.split(",")[0]}</div>
+            <div className="date">{findAddress(event, events[index], savedLocations)?.split(",")[1]}</div>
           </div>
         </CardContentDetails>
       </div>
