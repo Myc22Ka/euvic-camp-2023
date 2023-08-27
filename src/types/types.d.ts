@@ -34,18 +34,19 @@ interface Entity {
 }
 
 interface GeoInfo {
-  geometry: GeoJsonGeometr;
+  geometry: {
+    type: string;
+    coordinates: [number, number];
+  };
   placekey: string;
 }
 
-type GeoJsonGeometry = {
-  type: string;
-  coordinates: [number, number];
-};
-
 type GeoJsonFeature = {
   type: string;
-  geometry: GeoJsonGeometry;
+  geometry: {
+    type: string;
+    coordinates: [number, number];
+  };
 };
 
 type Place = {

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../layout/Layout";
 import { Button, Stack } from "react-bootstrap";
 import { useTheme } from "../context/ThemeContext";
-import { MdArrowBack, MdInfoOutline } from "react-icons/md";
+import { MdArrowBack } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { findAddress } from "../constants";
@@ -11,8 +11,10 @@ import { CardStats } from "../components/Card/CardStats";
 import Labels from "../components/Card/Labels";
 import Section from "../layout/Section";
 import { ActiveDetails } from "../components/Card/ActiveDetails";
+import Calendar from "../components/CalendarModule";
 
 const Details: React.FC = () => {
+  document.cookie = "CONSENT=DUPA; SameSite=Lax";
   const storedContext = localStorage.getItem("lastClickedEvent");
   const [{ event, savedLocations }] = useState<{ event: EventfulEvent; savedLocations: SavedLocations[] }>(
     storedContext ? JSON.parse(storedContext) : null
@@ -51,7 +53,7 @@ const Details: React.FC = () => {
         </div>
       </Section>
 
-      <Stack direction="horizontal" gap={2}>
+      <Stack direction="horizontal" gap={2} style={{ flexWrap: "wrap" }}>
         <Stack direction="vertical" style={{ flex: 5 }}>
           <div className="category-card no-aminations" style={{ margin: 0, border: "none" }}>
             <Stack className="main-card-content align-items-start" gap={3} direction="vertical">
@@ -61,6 +63,7 @@ const Details: React.FC = () => {
               <ActiveDetails event={event} details={true} />
             </Stack>
           </div>
+          <div className="category-card no-aminations" style={{ border: "none" }}></div>
         </Stack>
         <Stack direction="vertical" style={{ flex: 2, margin: 0 }}>
           <div className="category-card no-aminations" style={{ margin: 0, border: "none" }}>
@@ -104,6 +107,9 @@ const Details: React.FC = () => {
                 })}
               </Stack>
             </Stack>
+          </div>
+          <div className="category-card no-aminations" style={{ border: "none" }}>
+            <Calendar from={event.results[0].start} to={event.results[0].end} />
           </div>
         </Stack>
       </Stack>

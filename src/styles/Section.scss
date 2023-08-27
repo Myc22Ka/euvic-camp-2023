@@ -46,3 +46,48 @@
     color: $darkmode;
   }
 }
+.month {
+  font-family: "Montserrat";
+  font-weight: bold;
+}
+
+/* Styles for the calendar grid */
+.calendar-grid {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: "Montserrat";
+  font-weight: bold;
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: bold;
+  padding: $GAP 0;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.day-cell {
+  @include flex-center;
+  height: 40px;
+  &.end-range {
+    color: $lightmode !important;
+    background-color: transparentize(darken($main, 15), 0.25);
+  }
+  &.middle-range {
+    color: $lightmode !important;
+    background-color: transparentize($background, 0.5);
+  }
+}
+
+/* Optional: Highlight the current day */
+.day-cell.current-day {
+  background-color: #f0f0f0;
+}
