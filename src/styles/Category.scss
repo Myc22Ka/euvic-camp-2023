@@ -87,7 +87,7 @@ a:last-child .category-card {
       @include flex-center;
       align-items: flex-start;
       flex-direction: column;
-      font-size: xx-small;
+      font-size: x-small;
       color: transparentize($lightmode, 0.2);
       .predicted-event-spend-number {
         color: #ff2364;

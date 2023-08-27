@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Layout from "../layout/Layout";
 import { Button, Stack } from "react-bootstrap";
 import { useTheme } from "../context/ThemeContext";
-import { MdArrowBack } from "react-icons/md";
+import { MdArrowBack, MdInfoOutline } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { findAddress } from "../constants";
@@ -19,8 +19,6 @@ const Details: React.FC = () => {
   );
   const { theme } = useTheme();
   useDocumentTitle(`${event.results[0].title} | Details`);
-
-  // console.log(event);
 
   return (
     <Layout>
@@ -54,7 +52,7 @@ const Details: React.FC = () => {
       </Section>
 
       <Stack direction="horizontal" gap={2}>
-        <Stack direction="vertical" style={{ flex: 3 }}>
+        <Stack direction="vertical" style={{ flex: 5 }}>
           <div className="category-card no-aminations" style={{ margin: 0, border: "none" }}>
             <Stack className="main-card-content align-items-start" gap={3} direction="vertical">
               <div className="card-title" style={{ fontSize: "small" }}>
@@ -64,9 +62,48 @@ const Details: React.FC = () => {
             </Stack>
           </div>
         </Stack>
-        <Stack direction="vertical" style={{ flex: 1, margin: 0 }}>
+        <Stack direction="vertical" style={{ flex: 2, margin: 0 }}>
           <div className="category-card no-aminations" style={{ margin: 0, border: "none" }}>
-            Hi
+            <Stack className="main-card-content align-items-start" gap={3} direction="vertical">
+              <div className="card-title" style={{ fontSize: "small" }}>
+                PREDICTED EVENT SPEND
+              </div>
+              <Stack className="card-content align-items-start">
+                <div className="card-stats">
+                  <div className="predicted-event-spend">
+                    <span className="predicted-event-spend-number" style={{ fontSize: "large" }}>
+                      ${event.results[0].predicted_event_spend.toLocaleString()}
+                    </span>
+                    <span>Total Predicted Event Spend (USD)</span>
+                  </div>
+                </div>
+                <Stack
+                  direction="horizontal"
+                  gap={2}
+                  className="justify-content-between pt-4"
+                  style={{ opacity: 0.6, fontSize: "small" }}
+                >
+                  <div>SPEND CATEGORIES</div>
+                  <div>SPEND (USD)</div>
+                </Stack>
+                {Object.entries(event.results[0].predicted_event_spend_industries).map(([key, value]) => {
+                  return (
+                    <React.Fragment key={key}>
+                      <div className="devider"></div>
+                      <Stack
+                        direction="horizontal"
+                        gap={2}
+                        className="justify-content-between pt-2"
+                        style={{ fontSize: "small" }}
+                      >
+                        <div style={{ textTransform: "capitalize" }}>{key}</div>
+                        <div>${value.toLocaleString()}</div>
+                      </Stack>
+                    </React.Fragment>
+                  );
+                })}
+              </Stack>
+            </Stack>
           </div>
         </Stack>
       </Stack>
