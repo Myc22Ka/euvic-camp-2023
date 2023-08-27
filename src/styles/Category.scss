@@ -14,7 +14,7 @@ a:last-child .category-card {
   @include flex-center;
   padding: 24px 40px;
   flex-direction: column;
-  &:hover {
+  &:not(&.no-aminations):hover {
     box-shadow: -20px 24px 64px transparentize($lightmode, 0.85);
     .card-title {
       color: $main;
@@ -29,135 +29,135 @@ a:last-child .category-card {
     width: 100%;
     background: transparentize($lightmode, 0.85);
   }
-  .main-card-content {
+}
+
+.main-card-content {
+  @include flex-center;
+  @include font(24px, $lightmode);
+  &.vertical {
+    flex-direction: column;
+  }
+  width: 100%;
+  .card-flex {
     @include flex-center;
-    @include font(24px, $lightmode);
-    &.vertical {
-      flex-direction: column;
-    }
     width: 100%;
-    .card-flex {
-      @include flex-center;
-      width: 100%;
-      justify-content: space-between;
+    justify-content: space-between;
+  }
+  .details-title {
+    color: $error;
+    font-size: x-small;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 0.7rem 0;
+  }
+  .card-button {
+    font-size: x-small;
+    color: $main;
+    text-transform: uppercase;
+    padding: 1.5rem;
+    transition: color 0.1s ease-in-out;
+    &:hover {
+      color: lighten($main, 30);
     }
-    .details-title {
-      color: $error;
-      font-size: x-small;
+  }
+  .tags,
+  .labels {
+    @include flex-center;
+    gap: $GAP;
+    .label {
+      background: transparentize($lightmode, 0.9);
       text-transform: uppercase;
-      letter-spacing: 2px;
-      padding: 0.7rem 0;
-    }
-    .card-button {
+      padding: 0.4rem 0.8rem;
       font-size: x-small;
-      color: $main;
-      text-transform: uppercase;
-      padding: 1.5rem;
-      transition: color 0.1s ease-in-out;
-      &:hover {
-        color: lighten($main, 30);
-      }
-    }
-    .card-content {
-      &.details {
-        width: 100%;
-        @include flex-center;
-        justify-content: space-between;
-      }
-      .card-stats {
-        @include flex-center;
-        gap: $GAP * 3;
-        .predicted-event-spend {
-          @include flex-center;
-          align-items: flex-start;
-          flex-direction: column;
-          font-size: xx-small;
-          color: transparentize($lightmode, 0.2);
-          .predicted-event-spend-number {
-            color: #ff2364;
-            font-size: medium;
-            &.black {
-              color: inherit;
-            }
-          }
-        }
-        .card-stats-whells {
-          @include flex-center;
-          @include font(x-small, $lightmode);
-          gap: $GAP;
-          .card-whell {
-            $size: 3rem;
-            @include flex-center;
-            flex-direction: column;
-            background: $error;
-            border-radius: 50%;
-            width: $size;
-            height: $size;
-            position: relative;
-            &::before {
-              content: "";
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              width: 90%;
-              height: 90%;
-              background: $darkmode;
-              border-radius: 50%;
-            }
-            span {
-              z-index: 2;
-            }
-            .card-whell-number {
-              font-size: medium;
-            }
-          }
-        }
-      }
-      .card-content-title {
-        @include flex-center;
-        justify-content: flex-start;
-        margin: 0.8rem 0;
-        .card-title {
-          transition: color 0.1s ease-in-out;
-        }
-        .event-state {
-          font-size: small;
-          background-color: transparentize($main, 0.5);
-          border-radius: 0.4rem;
-          padding: 0.4rem 0.8rem;
-          margin-left: $GAP;
-          color: lighten($main, 25);
-        }
-      }
-      .formatted-addres {
-        font-size: medium;
-        color: lighten($lightmode, 15);
-      }
-      .time,
-      .date {
-        font-size: small;
-        color: transparentize($lightmode, 0.3);
-      }
-      .date {
-        color: transparentize($lightmode, 0.6);
-      }
-    }
-    .tags,
-    .labels {
-      @include flex-center;
-      gap: $GAP;
-      .label {
-        background: transparentize($lightmode, 0.9);
-        text-transform: uppercase;
-        padding: 0.4rem 0.8rem;
-        font-size: x-small;
-        border-radius: 20px;
-      }
+      border-radius: 20px;
     }
   }
 }
 
+.card-content {
+  &.details {
+    width: 100%;
+    @include flex-center;
+    justify-content: space-between;
+  }
+  .card-stats {
+    @include flex-center;
+    gap: $GAP * 3;
+    .predicted-event-spend {
+      @include flex-center;
+      align-items: flex-start;
+      flex-direction: column;
+      font-size: xx-small;
+      color: transparentize($lightmode, 0.2);
+      .predicted-event-spend-number {
+        color: #ff2364;
+        font-size: medium;
+        &.black {
+          color: inherit;
+        }
+      }
+    }
+    .card-stats-whells {
+      @include flex-center;
+      @include font(x-small, $lightmode);
+      gap: $GAP;
+      .card-whell {
+        $size: 3rem;
+        @include flex-center;
+        flex-direction: column;
+        background: $error;
+        border-radius: 50%;
+        width: $size;
+        height: $size;
+        position: relative;
+        &::before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 90%;
+          height: 90%;
+          background: $darkmode;
+          border-radius: 50%;
+        }
+        span {
+          z-index: 2;
+        }
+        .card-whell-number {
+          font-size: medium;
+        }
+      }
+    }
+  }
+  .formatted-addres {
+    font-size: medium;
+    color: lighten($lightmode, 15);
+  }
+  .time,
+  .date {
+    font-size: small;
+    color: transparentize($lightmode, 0.3);
+  }
+  .date {
+    color: transparentize($lightmode, 0.6);
+  }
+}
+
+.card-title {
+  @include font(100%, inherit);
+}
+
+.event-state {
+  font-size: small;
+  background-color: transparentize($main, 0.5);
+  border-radius: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  margin-left: $GAP;
+  color: lighten($main, 25);
+}
+
+// lightmode
 .light-mode .category-card {
   background: white;
   &:hover {
@@ -187,11 +187,6 @@ a:last-child .category-card {
           }
         }
       }
-      .card-content-title {
-        .event-state {
-          color: darken($main, 25);
-        }
-      }
       .formatted-addres {
         color: darken($darkmode, 15);
       }
@@ -205,5 +200,9 @@ a:last-child .category-card {
     .labels .label {
       background: transparentize($darkmode, 0.9);
     }
+  }
+
+  .event-state {
+    color: darken($main, 25);
   }
 }

@@ -4,16 +4,19 @@ import styles from "../../styles/styles.module.scss";
 
 type CardStatsProps = {
   event: resultsEvent;
+  noMoney?: boolean;
 };
 
-export const CardStats: React.FC<CardStatsProps> = ({ event }) => {
+export const CardStats: React.FC<CardStatsProps> = ({ event, noMoney = false }) => {
   return (
     <div className="card-content">
       <div className="card-stats">
-        <div className="predicted-event-spend">
-          <span className="predicted-event-spend-number">${event.predicted_event_spend?.toLocaleString() ?? 0}</span>
-          <span>Predicted Event Spend (USD)</span>
-        </div>
+        {!noMoney ? (
+          <div className="predicted-event-spend">
+            <span className="predicted-event-spend-number">${event.predicted_event_spend?.toLocaleString() ?? 0}</span>
+            <span>Predicted Event Spend (USD)</span>
+          </div>
+        ) : null}
         <div className="predicted-event-spend">
           <span className="predicted-event-spend-number black">{event.phq_attendance?.toLocaleString() ?? 0}</span>
           <span>PHQ Attendance</span>

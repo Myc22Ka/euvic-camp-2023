@@ -22,7 +22,7 @@ const Card: React.FC<CardProps> = ({ index }) => {
         <div className="category-card">
           <CardContent index={index} />
           <Accordion.Collapse eventKey={events[index].results[0].id}>
-            <ActiveDetails index={index} />
+            <ActiveDetails event={events[index]} />
           </Accordion.Collapse>
         </div>
       </Accordion>

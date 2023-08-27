@@ -1,0 +1,12 @@
+@media (max-width: 920px) {
+  .wrap-920 {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    .my-2 {
+      justify-content: space-between;
+      .card-title {
+        max-width: 100%;
+      }
+    }
+  }
+}
