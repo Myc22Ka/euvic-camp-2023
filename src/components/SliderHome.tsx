@@ -1,26 +1,25 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Carousel from "react-bootstrap/Carousel";
-
-const SLIDER_CONTENT: Array<{ header: string; content: string }> = [
-  {
-    header: "First slide label",
-    content: "Nulla vitae elit libero, a pharetra augue mollis interdum.",
-  },
-  {
-    header: "Second slide label",
-    content: "Nulla vitae elit libero, a pharetra augue mollis interdum.",
-  },
-  {
-    header: "Third slide label",
-    content: "Nulla vitae elit libero, a pharetra augue mollis interdum.",
-  },
-  {
-    header: "Forth slide label",
-    content: "Nulla vitae elit libero, a pharetra augue mollis interdum.",
-  },
-];
+import { useEventsContext } from "../context/EventContext";
 
 const SliderHome: React.FC = () => {
+  const { events } = useEventsContext();
+
+  const SLIDER_CONTENT = useMemo(() => {
+    const filteredEvents = events.filter((e) => e.results[0].description);
+
+    if (!filteredEvents) return [];
+
+    return filteredEvents.slice(0, 4).map((e) => {
+      return {
+        header: e.results[0].title,
+        content: `${e.results[0].description.split(" ").slice(0, 30).join(" ")}${
+          30 > e.results[0].description.split(" ").length ? "" : "..."
+        }`,
+      };
+    });
+  }, [events]);
+
   return (
     <div className="slider-container">
       <Carousel>
