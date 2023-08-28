@@ -10,9 +10,10 @@ import SearchFilter from "../components/SearchFilter";
 import NoResults from "../components/NoResults";
 import { useEventsContext } from "../context/EventContext";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
+import { generateRequest } from "../constants";
 
 const Category: React.FC = () => {
-  const { events, loading } = useEventsContext();
+  const { events, loading, options } = useEventsContext();
   useDocumentTitle();
 
   return (
@@ -27,14 +28,14 @@ const Category: React.FC = () => {
       </Stack>
       {loading ? (
         <Loader />
-      ) : events.length !== 0 ? (
+      ) : generateRequest(options).length > 1 && events.length === 0 ? (
+        <NoResults />
+      ) : (
         <Section>
           {events.map((event, index) => (
             <Card key={event.results[0].id} index={index} />
           ))}
         </Section>
-      ) : (
-        <NoResults />
       )}
     </Layout>
   );

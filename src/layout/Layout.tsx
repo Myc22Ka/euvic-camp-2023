@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "./Header";
 import "../styles/Layout.scss";
 import { useLocation } from "react-router-dom";
@@ -11,6 +11,10 @@ interface ChildrenProps {
 const Layout: React.FC<ChildrenProps> = ({ children }) => {
   const location = useLocation();
   const { theme } = useTheme();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <React.Fragment>

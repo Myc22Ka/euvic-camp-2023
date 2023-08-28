@@ -73,6 +73,10 @@
   grid-template-columns: repeat(7, 1fr);
   gap: 2px;
 }
+.empty-cell {
+  height: 40px;
+  opacity: 0.25;
+}
 
 .day-cell {
   @include flex-center;
@@ -86,8 +90,9 @@
     background-color: transparentize($background, 0.5);
   }
 }
-
-/* Optional: Highlight the current day */
-.day-cell.current-day {
-  background-color: #f0f0f0;
+.leaflet-popup-content {
+  margin: 18px 24px !important;
+  font-family: "Montserrat";
+  font-weight: bold;
+  text-align: center;
 }

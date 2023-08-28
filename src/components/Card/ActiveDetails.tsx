@@ -28,7 +28,7 @@ const VenueContent: React.FC<{ event: EventfulEvent; savedLocations: SavedLocati
   event,
   savedLocations,
 }) => (
-  <CardContentDetails title="Venue">
+  <CardContentDetails title={`${event.results[0]?.entities[0]?.type || "Venue"}`}>
     <div>
       <div className="time">{findAddress(event.results[0], event, savedLocations)?.split(",")[0]}</div>
       <div className="date">{findAddress(event.results[0], event, savedLocations)?.split(",")[1]}</div>

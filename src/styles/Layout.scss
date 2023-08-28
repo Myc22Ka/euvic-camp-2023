@@ -83,7 +83,7 @@
 .btn.btn-flat {
   background-color: $main;
   border-radius: 0.3rem;
-  @include font(1rem, $color-dm-font);
+  @include font(1rem, $lightmode);
   @include flex-center;
   box-sizing: border-box;
   padding: 0.7rem 1rem;
@@ -95,5 +95,14 @@
   }
   &:active {
     background-color: darken($main, 5) !important;
+  }
+}
+.btn.btn-dark-bright,
+.btn.btn-light-bright {
+  background: darken($main, 15);
+  @include font(0.8rem, $lightmode);
+  &:hover {
+    background: $main;
+    color: $lightmode;
   }
 }

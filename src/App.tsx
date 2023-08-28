@@ -4,13 +4,13 @@ import { Route, Routes } from "react-router-dom";
 import { routes } from "./routes";
 import PageNotFound from "./pages/PageNotFound";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { ThemeProvider, initState } from "./context/ThemeContext";
+import { ThemeProvider, ThemeType, initState } from "./context/ThemeContext";
 import { EventsProvider } from "./context/EventContext";
 import Details from "./pages/Details";
 
 const App: React.FC = () => {
   return (
-    <ThemeProvider theme={initState}>
+    <ThemeProvider theme={(localStorage.getItem("theme") as ThemeType) || initState}>
       <EventsProvider>
         <Routes>
           <Route path="/">

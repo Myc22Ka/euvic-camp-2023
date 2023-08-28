@@ -37,28 +37,29 @@ const Calendar: React.FC<CalendarPropsType> = ({ from, to }) => {
     setCurrentYear(newYear);
   };
 
-  const totalDays = daysInMonth(currentYear, currentMonth);
   const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-  const daysArray = Array.from({ length: totalDays }, (_, index) => index + 1);
-  const emptyCellsBefore = Array.from({ length: (firstDay + 6) % 7 }, (_, index) => index);
+  const daysArray = Array.from({ length: daysInMonth(currentYear, currentMonth) }, (_, index) => index + 1);
+  const emptyCellsBefore = Array.from({ length: (firstDay + 6) % 7 }, (_, index) => index)
+    .map((e) => daysInMonth(currentYear, currentMonth - 1) - e)
+    .reverse();
   const emptyCellsAfter = Array.from(
-    { length: 6 - ((daysArray.length + emptyCellsBefore.length) % 7) },
+    { length: 7 - ((daysArray.length + emptyCellsBefore.length) % 7) },
     (_, index) => index
   );
 
   return (
     <Stack direction="vertical">
       <Stack direction="horizontal" className="justify-content-between">
-        <Button variant={theme} onClick={handlePreviousMonth} style={{ backgroundColor: "transparent" }}>
-          <MdArrowBackIosNew size={20} />
+        <Button variant={theme} onClick={handlePreviousMonth} style={{ backgroundColor: "transparent" }} title="prev">
+          <MdArrowBackIosNew size={20} aria-hidden="true" />
         </Button>
         <div className="month">
           {new Date(currentYear, currentMonth).toLocaleString("en-US", {
             month: "long",
           })}
         </div>
-        <Button variant={theme} onClick={handleNextMonth} style={{ backgroundColor: "transparent" }}>
-          <MdArrowBackIosNew style={{ transform: "rotate(180deg)" }} size={20} />
+        <Button variant={theme} onClick={handleNextMonth} style={{ backgroundColor: "transparent" }} title="next">
+          <MdArrowBackIosNew style={{ transform: "rotate(180deg)" }} size={20} aria-hidden="true" />
         </Button>
       </Stack>
 
@@ -69,13 +70,15 @@ const Calendar: React.FC<CalendarPropsType> = ({ from, to }) => {
           ))}
         </div>
         <div className="days">
-          {emptyCellsBefore.map((_, index) => (
-            <div key={`empty-before-${index}`} className="empty-cell" />
+          {emptyCellsBefore.map((e, index) => (
+            <div key={`empty-before-${index}`} className="empty-cell d-flex justify-content-center align-items-center">
+              {e}
+            </div>
           ))}
           {daysArray.map((day) => {
             const currentDate = new Date(currentYear, currentMonth, day).getTime();
             const start = new Date(formatDate(from, "short")).getTime();
-            const end = new Date(formatDate("2023-11-29T22:59:59Z", "short")).getTime();
+            const end = new Date(formatDate(to, "short")).getTime();
             let cellClassName = "day-cell";
 
             if (currentDate > start && currentDate < end) cellClassName = "day-cell middle-range";
@@ -89,7 +92,9 @@ const Calendar: React.FC<CalendarPropsType> = ({ from, to }) => {
             );
           })}
           {emptyCellsAfter.map((_, index) => (
-            <div key={`empty-after-${index}`} className="empty-cell" />
+            <div key={`empty-after-${index}`} className="empty-cell d-flex justify-content-center align-items-center">
+              {index + 1}
+            </div>
           ))}
         </div>
       </div>

@@ -12,9 +12,9 @@ import Labels from "../components/Card/Labels";
 import Section from "../layout/Section";
 import { ActiveDetails } from "../components/Card/ActiveDetails";
 import Calendar from "../components/CalendarModule";
+import MapView from "../components/MapView";
 
 const Details: React.FC = () => {
-  document.cookie = "CONSENT=DUPA; SameSite=Lax";
   const storedContext = localStorage.getItem("lastClickedEvent");
   const [{ event, savedLocations }] = useState<{ event: EventfulEvent; savedLocations: SavedLocations[] }>(
     storedContext ? JSON.parse(storedContext) : null
@@ -63,7 +63,38 @@ const Details: React.FC = () => {
               <ActiveDetails event={event} details={true} />
             </Stack>
           </div>
-          <div className="category-card no-aminations" style={{ border: "none" }}></div>
+          <div className="category-card no-aminations" style={{ border: "none" }}>
+            <Stack className="main-card-content align-items-start pb-4" gap={1} direction="vertical">
+              <div className="card-title pb-4" style={{ fontSize: "large" }}>
+                LOCATION
+              </div>
+              <Stack direction="horizontal" className="justify-content-between">
+                <Stack direction="vertical">
+                  <div className="formatted-addres" style={{ fontSize: "small", opacity: 0.9 }}>
+                    {findAddress(event.results[0], event, savedLocations) ||
+                      event.results[0].timezone?.split("_").join(" ").replace("/", ", ")}
+                  </div>
+                  <div style={{ fontSize: "small", opacity: 0.6 }}>{event.results[0].location.join(", ")}</div>
+                </Stack>
+                <a
+                  href={`https://www.google.com/maps?q=${[
+                    event.results[0].location[1],
+                    event.results[0].location[0],
+                  ].join(",")}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Button variant={`${theme}-bright`}>
+                    <Stack gap={2} direction="horizontal">
+                      <span>Go to Location</span>
+                      <MdArrowBack size={18} style={{ transform: "rotate(180deg)" }} />
+                    </Stack>
+                  </Button>
+                </a>
+              </Stack>
+            </Stack>
+            <MapView center={event.results[0].location} title={event.results[0].title} />
+          </div>
         </Stack>
         <Stack direction="vertical" style={{ flex: 2, margin: 0 }}>
           <div className="category-card no-aminations" style={{ margin: 0, border: "none" }}>
