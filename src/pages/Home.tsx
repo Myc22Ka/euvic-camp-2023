@@ -7,6 +7,7 @@ import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { Stack } from "react-bootstrap";
 import { useEventsContext } from "../context/EventContext";
 import MapView from "../components/MapView";
+import Logo from "../assets/img/logo.png";
 
 const Home: React.FC = () => {
   const { savedLocations } = useEventsContext();
@@ -21,12 +22,12 @@ const Home: React.FC = () => {
             <span className="card-title fs-4">What are we?</span>
           </Stack>
           <Stack direction="horizontal" className="justify-content-between">
-            <div className="description fs-6" style={{ width: "40vw" }}>
+            <div className="description fs-6" style={{ maxWidth: "50vw" }}>
               Welcome to our event discovery platform! Explore captivating events in{" "}
               {savedLocations?.map((location) => location.name).join(", ")}, and beyond. Uncover cultural richness and
               excitement both locally and globally. Your journey to unforgettable experiences starts here.
             </div>
-            <div className="logo"></div>
+            <img src={Logo} title={process.env.REACT_APP_NAME} alt={process.env.REACT_APP_NAME} />
           </Stack>
         </Stack>
         <Section>
