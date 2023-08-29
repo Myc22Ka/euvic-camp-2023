@@ -53,7 +53,7 @@ const SearchFilter: React.FC = () => {
                 size="sm"
                 type="text"
                 placeholder="Event Search"
-                onChange={(e) => changeOptions({ q: e.target.value, location: "" })}
+                onChange={(e) => changeOptions({ q: e.target.value })}
                 name="search"
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
                   if (e.key === "Enter") handleSubmit(e);

@@ -2,11 +2,11 @@ import React from "react";
 import "./styles/App.scss";
 import { Route, Routes } from "react-router-dom";
 import { routes } from "./routes";
-import PageNotFound from "./pages/PageNotFound";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ThemeProvider, ThemeType, initState } from "./context/ThemeContext";
 import { EventsProvider } from "./context/EventContext";
 import Details from "./pages/Details";
+import Home from "./pages/Home";
 
 const App: React.FC = () => {
   return (
@@ -14,7 +14,7 @@ const App: React.FC = () => {
       <EventsProvider>
         <Routes>
           <Route path="/">
-            <Route path="*" element={<PageNotFound />} />
+            <Route path="*" element={<Home />} /> {/*here should be page not foung but i'm to lazy */}
             {routes.map((route, key) => {
               if (key === 0) return <Route key={key} index element={<route.component />} />;
               return (
