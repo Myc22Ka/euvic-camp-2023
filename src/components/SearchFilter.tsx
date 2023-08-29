@@ -43,7 +43,7 @@ const SearchFilter: React.FC = () => {
         <MdOutlineSearch fontSize={16} /> Search Events
       </Button>
 
-      <Offcanvas show={show} onHide={() => setShow(false)}>
+      <Offcanvas show={show} onHide={() => setShow(false)} style={{ zIndex: 99999 }}>
         <Offcanvas.Header closeButton className="d-flex align-items-center">
           <Offcanvas.Title>
             <Stack direction="horizontal" gap={1}>

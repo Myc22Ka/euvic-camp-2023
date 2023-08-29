@@ -9,7 +9,7 @@ type CardStatsProps = {
 
 export const CardStats: React.FC<CardStatsProps> = ({ event, noMoney = false }) => {
   return (
-    <div className="card-content">
+    <div className="card-content" style={{ minWidth: "30vw" }}>
       <div className="card-stats">
         {!noMoney ? (
           <div className="predicted-event-spend">

@@ -71,9 +71,9 @@ const Calendar: React.FC<CalendarPropsType> = ({ from, to }) => {
         </div>
         <div className="days">
           {emptyCellsBefore.map((e, index) => (
-            <div key={`empty-before-${index}`} className="empty-cell d-flex justify-content-center align-items-center">
+            <Stack key={`empty-before-${index}`} className="empty-cell justify-content-center align-items-center">
               {e}
-            </div>
+            </Stack>
           ))}
           {daysArray.map((day) => {
             const currentDate = new Date(currentYear, currentMonth, day).getTime();
@@ -92,9 +92,9 @@ const Calendar: React.FC<CalendarPropsType> = ({ from, to }) => {
             );
           })}
           {emptyCellsAfter.map((_, index) => (
-            <div key={`empty-after-${index}`} className="empty-cell d-flex justify-content-center align-items-center">
+            <Stack key={`empty-after-${index}`} className="empty-cell justify-content-center align-items-center">
               {index + 1}
-            </div>
+            </Stack>
           ))}
         </div>
       </div>

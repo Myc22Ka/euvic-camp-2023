@@ -9,16 +9,19 @@ a:last-child .category-card {
 
 .category-card {
   background-color: lighten($darkmode, 3);
+  transition: background-color 0.1s ease-in-out;
   border: 3px solid transparent;
   margin: $GAP 0;
   @include flex-center;
   padding: 24px 40px;
   flex-direction: column;
   &:not(&.no-aminations):hover {
-    box-shadow: -20px 24px 64px transparentize($lightmode, 0.85);
     .card-title {
       color: $main;
     }
+  }
+  &:hover {
+    background-color: lighten($darkmode, 5);
   }
   .accordion-collapse {
     width: 100%;
@@ -146,6 +149,9 @@ a:last-child .category-card {
 
 .card-title {
   @include font(100%, inherit);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .event-state {
@@ -161,7 +167,7 @@ a:last-child .category-card {
 .light-mode .category-card {
   background: white;
   &:hover {
-    box-shadow: -20px 24px 64px transparentize($darkmode, 0.85);
+    background-color: darken(white, 3);
     .card-title {
       color: $main;
     }

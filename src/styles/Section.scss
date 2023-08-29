@@ -38,19 +38,19 @@
     }
   }
 }
-
 .light-mode .section .categories {
   .category {
     background: transparentize($main, 0.7);
     color: $darkmode;
   }
 }
-.month {
+
+/* Styles for the calendar grid */
+.month,
+.description {
   font-family: "Montserrat";
   font-weight: bold;
 }
-
-/* Styles for the calendar grid */
 .calendar-grid {
   display: flex;
   flex-direction: column;

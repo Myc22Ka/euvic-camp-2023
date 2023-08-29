@@ -12,8 +12,8 @@ const useThemeContext = (defaultTheme: ThemeType) => {
   const changeTheme = useCallback(() => {
     setTheme(theme === "light" ? "dark" : "light");
     localStorage.setItem("theme", theme === "light" ? "dark" : "light");
-    document.body.setAttribute("data-bs-theme", theme === "light" ? "dark" : "light");
-    document.documentElement.style.backgroundColor = theme === "light" ? styles.darkmode : styles.lightmode;
+    document.body.setAttribute("data-bs-theme", localStorage.getItem("theme") as ThemeType);
+    document.documentElement.style.backgroundColor = localStorage.getItem("theme") as ThemeType;
   }, [theme]);
 
   return { theme, changeTheme };
@@ -36,7 +36,7 @@ interface ThemeProviderProps {
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, ...initState }) => {
   const location = useLocation();
   useEffect(() => {
-    document.body.setAttribute("data-bs-theme", initState.theme);
+    document.body.setAttribute("data-bs-theme", localStorage.getItem("theme") as ThemeType);
   }, [location]);
 
   return <ThemeContext.Provider value={useThemeContext(initState.theme)}>{children}</ThemeContext.Provider>;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 import Layout from "../layout/Layout";
 import { Button, Stack } from "react-bootstrap";
 import { useTheme } from "../context/ThemeContext";
@@ -22,6 +22,14 @@ const Details: React.FC = () => {
   const { theme } = useTheme();
   useDocumentTitle(`${event.results[0].title} | Details`);
 
+  const defaultObj = useMemo(() => {
+    return {
+      accommodation: 0,
+      hospitality: 0,
+      transportation: 0,
+    };
+  }, []);
+
   return (
     <Layout>
       <Stack direction="horizontal" gap={3} className="p-2 pb-0">
@@ -38,7 +46,7 @@ const Details: React.FC = () => {
           <Stack className="main-card-content" gap={3}>
             <Stack direction="horizontal" gap={4} className="justify-content-between wrap-920">
               <Stack className="card-content">
-                <CardContentTitle event={event.results[0]} full={true} />
+                <CardContentTitle event={event.results[0]} />
                 <div className="formatted-addres" style={{ opacity: 0.7 }}>
                   {findAddress(event.results[0], event, savedLocations) ||
                     event.results[0].timezone?.split("_").join(" ").replace("/", ", ")}
@@ -106,7 +114,7 @@ const Details: React.FC = () => {
                 <div className="card-stats">
                   <div className="predicted-event-spend">
                     <span className="predicted-event-spend-number" style={{ fontSize: "large" }}>
-                      ${event.results[0].predicted_event_spend.toLocaleString()}
+                      ${event.results[0]?.predicted_event_spend?.toLocaleString() || 0}
                     </span>
                     <span>Total Predicted Event Spend (USD)</span>
                   </div>
@@ -120,22 +128,24 @@ const Details: React.FC = () => {
                   <div>SPEND CATEGORIES</div>
                   <div>SPEND (USD)</div>
                 </Stack>
-                {Object.entries(event.results[0].predicted_event_spend_industries).map(([key, value]) => {
-                  return (
-                    <React.Fragment key={key}>
-                      <div className="devider"></div>
-                      <Stack
-                        direction="horizontal"
-                        gap={2}
-                        className="justify-content-between pt-2"
-                        style={{ fontSize: "small" }}
-                      >
-                        <div style={{ textTransform: "capitalize" }}>{key}</div>
-                        <div>${value.toLocaleString()}</div>
-                      </Stack>
-                    </React.Fragment>
-                  );
-                })}
+                {Object.entries(event.results[0]?.predicted_event_spend_industries || defaultObj).map(
+                  ([key, value]) => {
+                    return (
+                      <React.Fragment key={key}>
+                        <div className="devider"></div>
+                        <Stack
+                          direction="horizontal"
+                          gap={2}
+                          className="justify-content-between pt-2"
+                          style={{ fontSize: "small" }}
+                        >
+                          <div style={{ textTransform: "capitalize" }}>{key}</div>
+                          <div>${value.toLocaleString()}</div>
+                        </Stack>
+                      </React.Fragment>
+                    );
+                  }
+                )}
               </Stack>
             </Stack>
           </div>

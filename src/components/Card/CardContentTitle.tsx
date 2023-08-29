@@ -3,26 +3,17 @@ import { Stack } from "react-bootstrap";
 
 type CardContentTitleProps = {
   event: resultsEvent;
-  full?: boolean;
 };
 
-export const CardContentTitle: React.FC<CardContentTitleProps> = ({ event, full = false }) => {
+export const CardContentTitle: React.FC<CardContentTitleProps> = ({ event }) => {
   return (
-    <Stack className="my-2 align-items-center" direction="horizontal" gap={2}>
-      <span
-        className="card-title"
-        style={{
-          transition: "color 0.1s ease-in-out",
-          // textOverflow: !full ? "ellipsis" : "initial",
-          // overflow: !full ? "hidden" : "initial",
-          // whiteSpace: "nowrap",
-          // maxWidth: !full ? "35vw" : "initial",
-          // flex: !full ? 1 : "none",
-        }}
-      >
+    <Stack className="my-2 align-items-center" direction="horizontal" gap={2} style={{ maxWidth: "50vw" }}>
+      <span className="card-title" style={{ transition: "color 0.1s ease-in-out" }}>
         {event.title}
       </span>
-      {event.state === "active" ? null : <span className="event-state">{`${event.state} event`}</span>}
+      {event.state === "active" ? null : (
+        <span className="event-state" style={{ whiteSpace: "nowrap" }}>{`${event.state} event`}</span>
+      )}
     </Stack>
   );
 };
