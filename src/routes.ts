@@ -1,6 +1,6 @@
-import SignIn from "./auth/SignIn";
+import SignUp from "./auth/SignUp";
 import Home from "./pages/Home";
-import SignOut from "./auth/SignOut";
+import Login from "./auth/Login";
 import Category from "./pages/Category";
 
 export const routes: Route[] = [
@@ -9,12 +9,12 @@ export const routes: Route[] = [
     component: Home,
   },
   {
-    url: "sign in",
-    component: SignIn,
+    url: "sign up",
+    component: SignUp,
   },
   {
-    url: "sign out",
-    component: SignOut,
+    url: "login",
+    component: Login,
   },
   {
     url: "category",

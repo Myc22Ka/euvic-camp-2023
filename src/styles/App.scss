@@ -86,3 +86,13 @@ html {
   font-weight: bold;
   font-size: 20px;
 }
+.card,
+.card-body {
+  background: darken($darkmode, 1);
+  border-radius: 1rem !important;
+}
+
+.light-mode .card,
+.light-mode .card-body {
+  background: lighten($lightmode, 5) !important;
+}

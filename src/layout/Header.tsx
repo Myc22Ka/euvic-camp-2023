@@ -43,11 +43,11 @@ const Header: React.FC<HeaderProps> = ({ home }) => {
             >
               {theme === "light" ? <BsFillSunFill /> : <BsFillMoonFill />}
             </Button>
-            <Link to="/sign in" className="align-items-center d-flex">
-              <Button variant="flat">Sign In</Button>
+            <Link to="/login" className="align-items-center d-flex">
+              <Button variant="flat">Login</Button>
             </Link>
-            <Link to="/sign out" className="align-items-center d-flex">
-              <Button variant="flat">Sign Out</Button>
+            <Link to="/sign up" className="align-items-center d-flex">
+              <Button variant="flat">Sign Up</Button>
             </Link>
           </Stack>
         </Nav>
