@@ -13,8 +13,8 @@ const CardButton: React.FC<CardButtonProps> = ({ eventKey }) => {
   });
 
   return (
-    <div className={`card-button`} onClick={handleClick}>
-      {!active ? "+ more" : "- hide"} details
+    <div className="card-button" onClick={handleClick} style={{ textAlign: "center" }}>
+      {!active ? "+ more details" : "- hide details"}
     </div>
   );
 };

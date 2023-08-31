@@ -7,4 +7,36 @@
       max-width: 100% !important;
     }
   }
+  .category-title {
+    font-size: calc(60% + 0.3vw) !important;
+  }
+  .category {
+    padding: 1vw !important;
+    height: 25vw;
+    svg {
+      padding: 1vw !important;
+    }
+  }
+}
+@media (max-width: 520px) {
+  .category-card {
+    padding: 1vw !important;
+  }
+  .tags,
+  .time {
+    font-size: 8px !important;
+  }
+  .wrap-520 {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  .category-title {
+    font-size: xx-small !important;
+  }
+  .vanish img {
+    display: none;
+  }
+  .category-card .description {
+    max-width: 100% !important;
+  }
 }

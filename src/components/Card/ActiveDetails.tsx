@@ -44,7 +44,7 @@ export const ActiveDetails: React.FC<ActiveDetailsProps> = ({ event, details = f
       {!details ? (
         <React.Fragment>
           <div className="devider"></div>
-          <Stack className="main-card-content" direction="horizontal">
+          <Stack className="main-card-content align-items-start" direction="horizontal">
             <TimeAndDateContent event={event} />
             <VenueContent event={event} savedLocations={savedLocations} />
           </Stack>

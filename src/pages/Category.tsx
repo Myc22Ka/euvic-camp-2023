@@ -18,13 +18,17 @@ const Category: React.FC = () => {
 
   return (
     <Layout>
-      <Stack direction="horizontal" className="p-2 pb-0" gap={1}>
-        <Badge bg="flat" className="rounded-pill">
-          {events.reduce((acc, event) => event.results.length + acc, 0)}
-        </Badge>
-        <div className="badge-text p-2">Events</div>
-        <SearchFilter />
-        <SideFilter />
+      <Stack direction="horizontal" className="p-2 pb-0 wrap-520 justify-content-between" gap={1}>
+        <Stack direction="horizontal">
+          <Badge bg="flat" className="rounded-pill">
+            {events.reduce((acc, event) => event.results.length + acc, 0)}
+          </Badge>
+          <div className="badge-text p-2">Events</div>
+        </Stack>
+        <Stack direction="horizontal" gap={2}>
+          <SearchFilter />
+          <SideFilter />
+        </Stack>
       </Stack>
       {loading ? (
         <Loader />

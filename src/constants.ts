@@ -10,17 +10,53 @@ import {
 } from "react-icons/md";
 import { IconType } from "react-icons/lib";
 
-export type CATEGORIES_TYPE = Array<{ name: string; icon: IconType }>;
+export type CATEGORIES_TYPE = Array<{ name: string; icon: IconType; details: string }>;
 
 export const CATEGORIES: CATEGORIES_TYPE = [
-  { name: "Sports", icon: MdSportsBaseball },
-  { name: "Conferences", icon: MdSlideshow },
-  { name: "Expos", icon: MdShoppingCart },
-  { name: "Concerts", icon: MdOutlineMusicNote },
-  { name: "Festivals", icon: MdOutlineFestival },
-  { name: "Performing Arts", icon: MdBrush },
-  { name: "Community", icon: MdPeople },
-  { name: "Academic", icon: MdSchool },
+  {
+    name: "Sports",
+    icon: MdSportsBaseball,
+    details:
+      "A sports competition consists of multiple players or teams. It has a certain theme or goals with its own rules to regulate and a dedicated environment as well.",
+  },
+  {
+    name: "Conferences",
+    icon: MdSlideshow,
+    details: "A formal meeting or forum relating to a certain topic between a group of people with shared interests.",
+  },
+  {
+    name: "Expos",
+    icon: MdShoppingCart,
+    details:
+      "An industrial exhibition for communicating and trading purpose between business, or a trade fair that connects business and customers.",
+  },
+  {
+    name: "Concerts",
+    icon: MdOutlineMusicNote,
+    details:
+      "A musical performance where the primary intention of attendance is to see the musical artist or listen to music.",
+  },
+  {
+    name: "Festivals",
+    icon: MdOutlineFestival,
+    details: "A commonly known day or a period of time when people gather together to celebrate a specific reason.",
+  },
+  {
+    name: "Performing Arts",
+    icon: MdBrush,
+    details: "A show or an exhibition of creative activities for an audience, for example, a circus show.",
+  },
+  {
+    name: "Community",
+    icon: MdPeople,
+    details:
+      "This category includes various types of events, for example, a college event, a community party, or a fan meeting.",
+  },
+  {
+    name: "Academic",
+    icon: MdSchool,
+    details: "Academic Events are captured from an individual higher education institute's academic calendar.",
+  },
 ];
 
 export const defaultFetchOptions: FetchRequest = {

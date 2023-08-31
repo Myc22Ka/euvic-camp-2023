@@ -53,7 +53,7 @@ const Details: React.FC = () => {
                 </div>
               </Stack>
             </Stack>
-            <Stack direction="horizontal" className="justify-content-between">
+            <Stack direction="horizontal" className="justify-content-between wrap-520" gap={3}>
               <Labels event={event.results[0]} />
               <CardStats event={event.results[0]} noMoney={true} />
             </Stack>

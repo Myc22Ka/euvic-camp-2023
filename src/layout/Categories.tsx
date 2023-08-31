@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { CATEGORIES, defaultFetchOptions } from "../constants";
 import { useEventsContext } from "../context/EventContext";
+import { Stack } from "react-bootstrap";
 
 const Categories: React.FC = () => {
   const { reFetchEvents } = useEventsContext();
@@ -16,11 +17,15 @@ const Categories: React.FC = () => {
             reFetchEvents({ ...defaultFetchOptions, category: category.name.toLowerCase().split(" ").join("-") })
           }
         >
-          <div className="category">
+          <Stack
+            direction="vertical"
+            gap={2}
+            className="justify-content-center align-items-center category"
+            title={category.details}
+          >
             <category.icon />
             <div className="category-title">{category.name}</div>
-            <div className="category-description">Some text for now</div>
-          </div>
+          </Stack>
         </Link>
       ))}
     </div>

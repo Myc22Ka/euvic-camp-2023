@@ -21,7 +21,7 @@ const Home: React.FC = () => {
           <Stack direction="vertical">
             <span className="card-title fs-4">What are we?</span>
           </Stack>
-          <Stack direction="horizontal" className="justify-content-between">
+          <Stack direction="horizontal" className="justify-content-between vanish">
             <div className="description fs-6" style={{ maxWidth: "50vw" }}>
               Welcome to our event discovery platform! Explore captivating events in{" "}
               {savedLocations?.map((location) => location.name).join(", ")}, and beyond. Uncover cultural richness and
@@ -36,7 +36,7 @@ const Home: React.FC = () => {
         <Stack className="category-card mt-0" gap={2}>
           <Stack direction="vertical">
             <span className="card-title fs-4">Where are we?</span>
-            <div className="description fs-6" style={{ width: "40vw" }}>
+            <div className="description fs-6">
               You can find us at {savedLocations?.map((location) => location.name).join(", ")}.
             </div>
           </Stack>

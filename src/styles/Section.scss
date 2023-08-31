@@ -9,26 +9,26 @@
     gap: $GAP;
     .category {
       @include flex-center;
+      justify-content: space-between;
       gap: $GAP;
       flex-direction: column;
       background: transparentize(lighten($background, 15), 0.7);
       transition: background-color 0.3s ease-in-out;
+      overflow: hidden;
       padding: 1rem;
-      @include font(1.7rem, white);
+      @include font(calc(100% + 0.3vw), white);
       cursor: pointer;
       &:hover {
         background: transparentize($main, 0.3);
       }
       svg {
-        width: 5vw;
-        height: 5vw;
+        $size: 3rem;
+        width: $size;
+        height: $size;
         fill: white;
         background: $main;
-        padding: 1rem;
+        padding: 0.5rem;
         border-radius: 50%;
-      }
-      .category-description {
-        font-size: small;
       }
     }
     @for $i from 1 through 8 {
