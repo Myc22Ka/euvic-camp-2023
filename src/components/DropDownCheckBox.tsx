@@ -8,9 +8,16 @@ type DropDownCheckboxPropsType = {
   parameter: "state" | "category" | "label";
   itemsList: CATEGORIES_TYPE | Array<string>;
   title: string;
+  newOptions: FetchRequest;
 };
 
-const DropDownCheckBox: React.FC<DropDownCheckboxPropsType> = ({ changeOptions, parameter, itemsList, title }) => {
+const DropDownCheckBox: React.FC<DropDownCheckboxPropsType> = ({
+  changeOptions,
+  parameter,
+  itemsList,
+  title,
+  newOptions,
+}) => {
   const checkBoxRef = useRef<HTMLDivElement>(null);
   const [isChecked, setIsChecked] = useState(
     itemsList.map((e, i) => ({
@@ -41,7 +48,10 @@ const DropDownCheckBox: React.FC<DropDownCheckboxPropsType> = ({ changeOptions, 
 
     setIsChecked(updatedChecked);
 
-    changeOptions({ [parameter]: selectedCheckBoxes });
+    changeOptions({
+      [parameter]: selectedCheckBoxes,
+      location: newOptions.location === "all" && parameter !== "category" ? "" : newOptions.location,
+    });
   };
 
   return (
@@ -65,7 +75,7 @@ const DropDownCheckBox: React.FC<DropDownCheckboxPropsType> = ({ changeOptions, 
               type="checkbox"
               id={`default-checkbox-${parameter}-${key + 1}`}
               label={typeof item === "string" ? item : item.name}
-              checked={isChecked[key].checked}
+              checked={isChecked[key]?.checked || false}
               onChange={() => handleChange(key)}
             />
           ))}

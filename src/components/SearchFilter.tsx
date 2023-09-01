@@ -53,7 +53,12 @@ const SearchFilter: React.FC = () => {
                 size="sm"
                 type="text"
                 placeholder="Event Search"
-                onChange={(e) => changeOptions({ q: e.target.value })}
+                onChange={(e) =>
+                  changeOptions({
+                    q: e.target.value,
+                    location: newOptions.location === "all" ? "" : newOptions.location,
+                  })
+                }
                 name="search"
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
                   if (e.key === "Enter") handleSubmit(e);
@@ -103,6 +108,7 @@ const SearchFilter: React.FC = () => {
               <Stack direction="horizontal" gap={1}>
                 <InputGroup className="mb-2 justify-content-center">
                   <DropDownCheckBox
+                    newOptions={newOptions}
                     title="Categories"
                     changeOptions={changeOptions}
                     parameter="category"
@@ -111,6 +117,7 @@ const SearchFilter: React.FC = () => {
                 </InputGroup>
                 <InputGroup className="mb-2 justify-content-center">
                   <DropDownCheckBox
+                    newOptions={newOptions}
                     title="Labels"
                     changeOptions={changeOptions}
                     parameter="label"
@@ -119,6 +126,7 @@ const SearchFilter: React.FC = () => {
                 </InputGroup>
                 <InputGroup className="mb-2 justify-content-center">
                   <DropDownCheckBox
+                    newOptions={newOptions}
                     title="Event status"
                     changeOptions={changeOptions}
                     parameter="state"

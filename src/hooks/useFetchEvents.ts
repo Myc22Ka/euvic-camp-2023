@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSavedLocations } from "./useSavedLocations";
 import { useNavigate } from "react-router-dom";
 import { generateRequest } from "../constants";
@@ -21,7 +21,8 @@ export const useFetchEvents = ({ category, limit, location, q, state, label, phq
     async (location: string, request: string) => {
       let baseEndpoint: string = `https://api.predicthq.com/v1/saved-locations/${location}/insights/events`;
 
-      if (q || label || phq_attendance.gte || phq_attendance.lte) baseEndpoint = `https://api.predicthq.com/v1/events`;
+      if (q || label || phq_attendance.gte || phq_attendance.lte || state)
+        baseEndpoint = `https://api.predicthq.com/v1/events`;
 
       try {
         const response = await fetch(baseEndpoint + request, {
@@ -38,7 +39,7 @@ export const useFetchEvents = ({ category, limit, location, q, state, label, phq
         return null; // Return null to indicate an error
       }
     },
-    [q, label, phq_attendance.gte, phq_attendance.lte]
+    [q, label, phq_attendance.gte, phq_attendance.lte, state]
   );
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef } from "react";
+import React, { useCallback, useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import { useTheme } from "../context/ThemeContext";
 import { ITEMS, OPTIONS, filterEvents } from "../utils/filters";

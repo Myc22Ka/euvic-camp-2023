@@ -34,7 +34,7 @@ const SignUp: React.FC = () => {
                           <Form.Control type="password" autoComplete="off" placeholder="Password" />
                         </Form.Group>
 
-                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                        <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
                           <Form.Label>Confirm Password</Form.Label>
                           <Form.Control type="password" autoComplete="off" placeholder="Confirm Password" />
                         </Form.Group>

@@ -1,5 +1,4 @@
 import React, { useState, useContext, createContext, ReactElement, useCallback, useEffect } from "react";
-import styles from "../styles/styles.module.scss";
 import { useLocation } from "react-router-dom";
 
 export type ThemeType = "light" | "dark";
