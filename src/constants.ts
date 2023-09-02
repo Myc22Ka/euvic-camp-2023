@@ -62,7 +62,7 @@ export const CATEGORIES: CATEGORIES_TYPE = [
 export const defaultFetchOptions: FetchRequest = {
   location: "all",
   category: "",
-  limit: 10,
+  limit: 25,
   q: "",
   state: "",
   label: "",

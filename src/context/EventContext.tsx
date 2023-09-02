@@ -18,12 +18,9 @@ interface EventsProviderProps {
 }
 
 export const EventsProvider: React.FC<EventsProviderProps> = ({ children }) => {
-  const [options, setOptions] = useState<FetchRequest>({ ...defaultFetchOptions });
+  const [options, setOptions] = useState<FetchRequest>(defaultFetchOptions);
 
-  const { events, loading, savedLocations, changeEventsDisplay } = useFetchEvents({
-    ...defaultFetchOptions,
-    ...options,
-  });
+  const { events, loading, savedLocations, changeEventsDisplay } = useFetchEvents(options);
 
   useEffect(() => {
     changeEventsDisplay(events);

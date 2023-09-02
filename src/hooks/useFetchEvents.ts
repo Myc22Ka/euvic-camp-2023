@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useSavedLocations } from "./useSavedLocations";
 import { useNavigate } from "react-router-dom";
-import { generateRequest } from "../constants";
+import { defaultFetchOptions, generateRequest } from "../constants";
 import { eventFixArray } from "../utils/filters";
 
 export const useFetchEvents = ({ category, limit, location, q, state, label, phq_attendance }: FetchRequest) => {
@@ -25,13 +25,15 @@ export const useFetchEvents = ({ category, limit, location, q, state, label, phq
         baseEndpoint = `https://api.predicthq.com/v1/events`;
 
       try {
-        const response = await fetch(baseEndpoint + request, {
-          headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
-            Accept: "application/json",
-          },
-        });
-
+        const response = await fetch(
+          baseEndpoint + request + (limit === defaultFetchOptions.limit ? `&limit=${limit}` : ""),
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+              Accept: "application/json",
+            },
+          }
+        );
         const data = await response.json();
         return { ...data, location_id: location };
       } catch (err) {
@@ -39,7 +41,7 @@ export const useFetchEvents = ({ category, limit, location, q, state, label, phq
         return null; // Return null to indicate an error
       }
     },
-    [q, label, phq_attendance.gte, phq_attendance.lte, state]
+    [q, label, phq_attendance.gte, phq_attendance.lte, state, limit]
   );
 
   useEffect(() => {
@@ -56,7 +58,7 @@ export const useFetchEvents = ({ category, limit, location, q, state, label, phq
       Promise.all(savedLocations.map((location) => fetchLocation(location.location_id, request)))
         .then((results) => {
           const filteredResults = results.filter((result) => result !== null);
-          if (request.length > 1) navigate(request);
+          // navigate(request.length > 1 ? request : "/category");
 
           setEvents(eventFixArray(filteredResults)); // Update events array with fetched data
         })
@@ -69,7 +71,7 @@ export const useFetchEvents = ({ category, limit, location, q, state, label, phq
 
     fetchLocation(location, request)
       .then((data) => {
-        if (request.length > 1) navigate(request);
+        // navigate(request.length > 1 ? request : "/category");
 
         setEvents(eventFixArray([data]));
       })
